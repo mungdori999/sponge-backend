@@ -15,9 +15,17 @@ public class OwnerDetail {
     private LocalDateTime deactivatedAt;
 
 
-     static OwnerDetail create() {
+    static OwnerDetail create() {
         OwnerDetail userDetail = new OwnerDetail();
         userDetail.registeredAt = LocalDateTime.now();
         return userDetail;
+    }
+
+    void activate() {
+        activatedAt = LocalDateTime.now();
+    }
+
+    void deactivate() {
+        deactivatedAt = LocalDateTime.now();
     }
 }

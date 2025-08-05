@@ -1,11 +1,11 @@
 package com.mungdori.sponge.domain.owner;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static com.mungdori.sponge.domain.owner.OwnerFixture.createOwnerRegisterRequest;
+import static com.mungdori.sponge.domain.owner.OwnerFixture.createPasswordEncoder;
 import static com.mungdori.sponge.domain.shared.UserStatus.*;
-import static com.mungdori.sponge.domain.owner.OwnerFixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -32,14 +32,15 @@ class OwnerTest {
         owner.activate();
 
         assertThat(owner.getStatus()).isEqualTo(ACTIVE);
+        assertThat(owner.getDetail().getActivatedAt()).isNotNull();
     }
-    
+
     @Test
     void activateFail() {
         owner.activate();
 
-         Assertions.assertThatThrownBy(()-> owner.activate())
-             .isInstanceOf(IllegalStateException.class);
+        assertThatThrownBy(() -> owner.activate())
+                .isInstanceOf(IllegalStateException.class);
     }
 
     @Test
@@ -49,6 +50,13 @@ class OwnerTest {
         owner.deactivate();
 
         assertThat(owner.getStatus()).isEqualTo(DEACTIVATED);
+        assertThat(owner.getDetail().getDeactivatedAt()).isNotNull();
+    }
+
+    @Test
+    void verifyPassword() {
+        assertThat(owner.verifyPassword("longsecret", passwordEncoder)).isTrue();
+        assertThat(owner.verifyPassword("longhello", passwordEncoder)).isFalse();
     }
 
     @Test
@@ -61,4 +69,29 @@ class OwnerTest {
         assertThatThrownBy(owner::deactivate).isInstanceOf(IllegalStateException.class);
     }
 
+    @Test
+    void invalidEmail() {
+        assertThatThrownBy(() ->
+                Owner.register(createOwnerRegisterRequest("invalid email"), passwordEncoder)
+        ).isInstanceOf(IllegalArgumentException.class);
+
+        Owner.register(createOwnerRegisterRequest(), passwordEncoder);
+
+    }
+
+    @Test
+    void updateInfo() {
+        owner.activate();
+
+        var request = new OwnerInfoUpdateRequest("김지용1");
+        owner.updateInfo(request);
+
+        assertThat(owner.getName()).isEqualTo(request.name());
+    }
+
+    @Test
+    void updateInfoFail() {
+        assertThatThrownBy(() -> owner.updateInfo(new OwnerInfoUpdateRequest("김지용1")))
+                .isInstanceOf(IllegalStateException.class);
+    }
 }
