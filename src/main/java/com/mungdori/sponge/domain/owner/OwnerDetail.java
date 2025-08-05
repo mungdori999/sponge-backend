@@ -6,7 +6,6 @@ import java.time.LocalDateTime;
 
 @Getter
 public class OwnerDetail {
-    private Long id;
 
     private LocalDateTime registeredAt;
 

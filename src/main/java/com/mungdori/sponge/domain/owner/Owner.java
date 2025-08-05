@@ -15,8 +15,6 @@ import static org.springframework.util.Assert.state;
 @ToString
 public class Owner {
 
-    private Long id;
-
     private Email email;
 
     private String name;
