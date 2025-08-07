@@ -5,6 +5,7 @@ import com.mungdori.sponge.domain.owner.Owner;
 import com.mungdori.sponge.domain.owner.OwnerInfoUpdateRequest;
 import com.mungdori.sponge.domain.shared.UserStatus;
 import jakarta.persistence.EntityManager;
+import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,6 +42,21 @@ record OwnerRegisterTest(OwnerRegister ownerRegister, EntityManager entityManage
         owner = ownerRegister.update(owner.getId(), new OwnerInfoUpdateRequest("testname"));
 
         assertThat(owner.getNickname()).isEqualTo("testname");
+    }
+
+    @Test
+    void updateOwnerInfoFail() {
+        Owner owner = registerOwner();
+
+        ownerRegister.update(owner.getId(), new OwnerInfoUpdateRequest("testname"));
+
+        // 중복 닉네임
+        assertThatThrownBy(() -> ownerRegister.update(owner.getId(), new OwnerInfoUpdateRequest("testname")))
+                .isInstanceOf(DuplicateNicknameException.class);
+
+        // 너무 긴 닉네임
+        assertThatThrownBy(() -> ownerRegister.update(owner.getId(), new OwnerInfoUpdateRequest("longtestname")))
+                .isInstanceOf(ConstraintViolationException.class);
     }
 
     private Owner registerOwner() {

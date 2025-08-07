@@ -25,14 +25,16 @@ public class OwnerModifyService implements OwnerRegister {
 
         checkDuplicateNickname(owner.getNickname());
 
-        ownerRepository.save(owner);
+        owner = ownerRepository.save(owner);
 
         return owner;
     }
 
     @Override
-    public Owner update(Long ownerId,OwnerInfoUpdateRequest updateRequest) {
+    public Owner update(Long ownerId, OwnerInfoUpdateRequest updateRequest) {
         Owner owner = ownerFinder.find(ownerId);
+
+        checkDuplicateNickname(updateRequest.nickname());
 
         owner.updateInfo(updateRequest);
 
