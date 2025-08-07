@@ -83,10 +83,10 @@ class OwnerTest {
     void updateInfo() {
         owner.activate();
 
-        var request = new OwnerInfoUpdateRequest("김지용1");
+        var request = new OwnerInfoUpdateRequest("testName");
         owner.updateInfo(request);
 
-        assertThat(owner.getName()).isEqualTo(request.name());
+        assertThat(owner.getNickName()).isEqualTo(request.name());
     }
 
     @Test

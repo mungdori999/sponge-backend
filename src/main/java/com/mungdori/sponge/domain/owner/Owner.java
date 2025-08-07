@@ -1,10 +1,16 @@
 package com.mungdori.sponge.domain.owner;
 
 
+import com.mungdori.sponge.domain.AbstractEntity;
 import com.mungdori.sponge.domain.shared.Email;
 import com.mungdori.sponge.domain.shared.UserStatus;
+import jakarta.persistence.Entity;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.NaturalId;
+import org.hibernate.annotations.NaturalIdCache;
 import org.springframework.util.Assert;
 
 import java.util.Objects;
@@ -12,12 +18,16 @@ import java.util.Objects;
 import static org.springframework.util.Assert.state;
 
 @Getter
-@ToString
-public class Owner {
+@Entity
+@ToString(callSuper = true, exclude = "detail")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NaturalIdCache
+public class Owner extends AbstractEntity {
 
+    @NaturalId
     private Email email;
 
-    private String name;
+    private String nickName;
     private String passwordHash;
 
     private UserStatus status;
@@ -27,7 +37,7 @@ public class Owner {
         Owner owner = new Owner();
 
         owner.email = new Email(registerRequest.email());
-        owner.name = Objects.requireNonNull(registerRequest.name());
+        owner.nickName = Objects.requireNonNull(registerRequest.nickName());
         owner.passwordHash = passwordEncoder.encode(Objects.requireNonNull(registerRequest.password()));
         owner.status = UserStatus.PENDING;
         owner.detail = OwnerDetail.create();
@@ -55,7 +65,7 @@ public class Owner {
     public void updateInfo(OwnerInfoUpdateRequest updateRequest) {
         Assert.state(getStatus() == UserStatus.ACTIVE, "등록완료 상태가 아니면 정보를 수정할 수 없습니다.");
 
-        this.name = Objects.requireNonNull(updateRequest.name());
+        this.nickName = Objects.requireNonNull(updateRequest.name());
     }
 
 
