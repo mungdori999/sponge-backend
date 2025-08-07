@@ -1,10 +1,12 @@
 package com.mungdori.sponge.domain.owner;
 
+import com.mungdori.sponge.domain.shared.GenderType;
+
 public class OwnerFixture {
 
     public static OwnerRegisterRequest createOwnerRegisterRequest(String email) {
 
-        return new OwnerRegisterRequest(email, "nickname", "longsecret");
+        return new OwnerRegisterRequest(email, "nickname", GenderType.MALE,"010-1111-1111","longsecret");
     }
 
     public static OwnerRegisterRequest createOwnerRegisterRequest() {

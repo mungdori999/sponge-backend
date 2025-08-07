@@ -44,6 +44,13 @@ class OwnerTest {
     }
 
     @Test
+    void changePassword() {
+        owner.changePassword("changesecret", passwordEncoder);
+
+        assertThat(owner.verifyPassword("changesecret", passwordEncoder)).isTrue();
+    }
+
+    @Test
     void deactivateFail() {
         owner.deactivate();
 

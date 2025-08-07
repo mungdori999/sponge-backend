@@ -27,6 +27,14 @@
             <basic name="nickname">
                 <column name="nickname" nullable="false" length="100"/>
             </basic>
+            <basic name="gender">
+                <column name="gender" nullable="false" length="50"/>
+                <enumerated>STRING</enumerated>
+            </basic>
+            <basic name="phoneNumber">
+                <column name="phoneNumber" length="100"/>
+            </basic>
+
             <basic name="passwordHash">
                 <column name="password_hash" nullable="false" length="200"/>
             </basic>
