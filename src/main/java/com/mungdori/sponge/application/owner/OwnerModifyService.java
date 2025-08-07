@@ -21,8 +21,16 @@ public class OwnerModifyService implements OwnerRegister {
     public Owner register(OwnerRegisterRequest registerRequest) {
         Owner owner = Owner.register(registerRequest, passwordEncoder);
 
+        checkDuplicateNickname(owner);
+
         ownerRepository.save(owner);
 
         return owner;
+    }
+
+    private void checkDuplicateNickname(Owner owner) {
+        if(ownerRepository.findByNickname(owner.getNickname()).isPresent()) {
+
+        }
     }
 }

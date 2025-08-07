@@ -27,28 +27,23 @@ public class Owner extends AbstractEntity {
     @NaturalId
     private Email email;
 
-    private String nickName;
+    private String nickname;
+
     private String passwordHash;
 
     private UserStatus status;
+
     private OwnerDetail detail;
 
     public static Owner register(OwnerRegisterRequest registerRequest, PasswordEncoder passwordEncoder) {
         Owner owner = new Owner();
 
         owner.email = new Email(registerRequest.email());
-        owner.nickName = Objects.requireNonNull(registerRequest.nickName());
+        owner.nickname = Objects.requireNonNull(registerRequest.nickName());
         owner.passwordHash = passwordEncoder.encode(Objects.requireNonNull(registerRequest.password()));
-        owner.status = UserStatus.PENDING;
+        owner.status = UserStatus.ACTIVE;
         owner.detail = OwnerDetail.create();
         return owner;
-    }
-
-    public void activate() {
-        state(status == UserStatus.PENDING, "PENDING 상태가 아닙니다");
-
-        this.status = UserStatus.ACTIVE;
-        this.detail.activate();
     }
 
     public void deactivate() {
@@ -65,7 +60,7 @@ public class Owner extends AbstractEntity {
     public void updateInfo(OwnerInfoUpdateRequest updateRequest) {
         Assert.state(getStatus() == UserStatus.ACTIVE, "등록완료 상태가 아니면 정보를 수정할 수 없습니다.");
 
-        this.nickName = Objects.requireNonNull(updateRequest.name());
+        this.nickname = Objects.requireNonNull(updateRequest.name());
     }
 
 
