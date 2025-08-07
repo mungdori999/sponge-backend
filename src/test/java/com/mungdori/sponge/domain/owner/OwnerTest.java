@@ -5,7 +5,8 @@ import org.junit.jupiter.api.Test;
 
 import static com.mungdori.sponge.domain.owner.OwnerFixture.createOwnerRegisterRequest;
 import static com.mungdori.sponge.domain.owner.OwnerFixture.createPasswordEncoder;
-import static com.mungdori.sponge.domain.shared.UserStatus.*;
+import static com.mungdori.sponge.domain.shared.UserStatus.ACTIVE;
+import static com.mungdori.sponge.domain.shared.UserStatus.DEACTIVATED;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 

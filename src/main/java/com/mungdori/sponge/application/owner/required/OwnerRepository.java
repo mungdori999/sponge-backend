@@ -9,5 +9,7 @@ public interface OwnerRepository extends Repository<Owner, Long> {
 
     Owner save(Owner owner);
 
+    Optional<Owner> findById(Long ownerId);
+
     Optional<Owner> findByNickname(String nickName);
 }
