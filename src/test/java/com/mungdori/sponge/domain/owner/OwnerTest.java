@@ -1,10 +1,11 @@
 package com.mungdori.sponge.domain.owner;
 
+import com.mungdori.sponge.domain.shared.GenderType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static com.mungdori.sponge.domain.owner.OwnerFixture.createOwnerRegisterRequest;
-import static com.mungdori.sponge.domain.owner.OwnerFixture.createPasswordEncoder;
+import static com.mungdori.sponge.domain.owner.OwnerFixture.*;
+import static com.mungdori.sponge.domain.shared.GenderType.*;
 import static com.mungdori.sponge.domain.shared.UserStatus.ACTIVE;
 import static com.mungdori.sponge.domain.shared.UserStatus.DEACTIVATED;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -25,6 +26,7 @@ class OwnerTest {
     @Test
     void registerOwner() {
         assertThat(owner.getStatus()).isEqualTo(ACTIVE);
+        assertThat(owner.getGender()).isEqualTo(MALE);
         assertThat(owner.getDetail().getRegisteredAt()).isNotNull();
     }
 
@@ -69,7 +71,7 @@ class OwnerTest {
 
     @Test
     void updateInfo() {
-        var request = new OwnerInfoUpdateRequest("testName");
+        var request = createOwnerInfoUpdateRequest();
         owner.updateInfo(request);
 
         assertThat(owner.getNickname()).isEqualTo(request.nickname());
@@ -79,7 +81,9 @@ class OwnerTest {
     void updateInfoFail() {
         owner.deactivate();
 
-        assertThatThrownBy(() -> owner.updateInfo(new OwnerInfoUpdateRequest("testName")))
+        assertThatThrownBy(() -> owner.updateInfo(createOwnerInfoUpdateRequest()))
                 .isInstanceOf(IllegalStateException.class);
     }
+
+
 }

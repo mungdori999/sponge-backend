@@ -6,11 +6,19 @@ public class OwnerFixture {
 
     public static OwnerRegisterRequest createOwnerRegisterRequest(String email) {
 
-        return new OwnerRegisterRequest(email, "nickname", GenderType.MALE,"010-1111-1111","longsecret");
+        return new OwnerRegisterRequest(email, "nickname", GenderType.MALE, "01012341234", "longsecret");
     }
 
     public static OwnerRegisterRequest createOwnerRegisterRequest() {
         return createOwnerRegisterRequest("mungdori999@gmail.com");
+    }
+
+    public static OwnerInfoUpdateRequest createOwnerInfoUpdateRequest(String nickname) {
+        return new OwnerInfoUpdateRequest(nickname, GenderType.MALE, "01012341234");
+    }
+
+    public static OwnerInfoUpdateRequest createOwnerInfoUpdateRequest() {
+        return createOwnerInfoUpdateRequest("nickname");
     }
 
 
