@@ -1,6 +1,5 @@
 package com.mungdori.sponge.application.owner.required;
 
-import com.mungdori.sponge.domain.owner.DuplicateNicknameException;
 import com.mungdori.sponge.domain.owner.Owner;
 import com.mungdori.sponge.domain.shared.UserStatus;
 import jakarta.persistence.EntityManager;
@@ -10,8 +9,8 @@ import org.springframework.dao.DataIntegrityViolationException;
 
 import static com.mungdori.sponge.domain.owner.OwnerFixture.createOwnerRegisterRequest;
 import static com.mungdori.sponge.domain.owner.OwnerFixture.createPasswordEncoder;
-import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DataJpaTest
 record OwnerRepositoryTest(OwnerRepository ownerRepository, EntityManager entityManager) {

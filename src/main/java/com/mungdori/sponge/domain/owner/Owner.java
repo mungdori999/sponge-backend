@@ -39,7 +39,7 @@ public class Owner extends AbstractEntity {
         Owner owner = new Owner();
 
         owner.email = new Email(registerRequest.email());
-        owner.nickname = Objects.requireNonNull(registerRequest.nickName());
+        owner.nickname = Objects.requireNonNull(registerRequest.nickname());
         owner.passwordHash = passwordEncoder.encode(Objects.requireNonNull(registerRequest.password()));
         owner.status = UserStatus.ACTIVE;
         owner.detail = OwnerDetail.create();
@@ -60,7 +60,7 @@ public class Owner extends AbstractEntity {
     public void updateInfo(OwnerInfoUpdateRequest updateRequest) {
         Assert.state(getStatus() == UserStatus.ACTIVE, "등록완료 상태가 아니면 정보를 수정할 수 없습니다.");
 
-        this.nickname = Objects.requireNonNull(updateRequest.name());
+        this.nickname = Objects.requireNonNull(updateRequest.nickname());
     }
 
 

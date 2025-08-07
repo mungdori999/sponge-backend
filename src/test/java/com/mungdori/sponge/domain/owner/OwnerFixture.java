@@ -4,7 +4,7 @@ public class OwnerFixture {
 
     public static OwnerRegisterRequest createOwnerRegisterRequest(String email) {
 
-        return new OwnerRegisterRequest(email, "김지용", "longsecret");
+        return new OwnerRegisterRequest(email, "nickname", "longsecret");
     }
 
     public static OwnerRegisterRequest createOwnerRegisterRequest() {

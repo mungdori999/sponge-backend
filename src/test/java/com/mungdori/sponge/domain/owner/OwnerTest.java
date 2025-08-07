@@ -65,7 +65,7 @@ class OwnerTest {
         var request = new OwnerInfoUpdateRequest("testName");
         owner.updateInfo(request);
 
-        assertThat(owner.getNickname()).isEqualTo(request.name());
+        assertThat(owner.getNickname()).isEqualTo(request.nickname());
     }
 
     @Test

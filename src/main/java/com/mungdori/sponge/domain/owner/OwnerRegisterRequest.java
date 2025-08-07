@@ -7,7 +7,7 @@ public record OwnerRegisterRequest(
         @Email
         String email,
         @Size(min = 2, max = 10)
-        String nickName,
+        String nickname,
         @Size(min = 8, max = 100)
         String password
 ) {
