@@ -4,6 +4,7 @@ import com.mungdori.sponge.application.owner.provided.OwnerFinder;
 import com.mungdori.sponge.application.owner.provided.OwnerRegister;
 import com.mungdori.sponge.application.owner.required.OwnerRepository;
 import com.mungdori.sponge.domain.owner.*;
+import com.mungdori.sponge.domain.shared.Email;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,11 +25,14 @@ public class OwnerModifyService implements OwnerRegister {
         Owner owner = Owner.register(registerRequest, passwordEncoder);
 
         checkDuplicateNickname(owner.getNickname());
+        checkDuplicateEmail(owner.getEmail());
 
         owner = ownerRepository.save(owner);
 
         return owner;
     }
+
+
 
     @Override
     public Owner update(Long ownerId, OwnerInfoUpdateRequest updateRequest) {
@@ -41,6 +45,12 @@ public class OwnerModifyService implements OwnerRegister {
         ownerRepository.save(owner);
 
         return owner;
+    }
+
+    private void checkDuplicateEmail(Email email) {
+        if (ownerRepository.findByEmail(email).isPresent()) {
+            throw new DuplicateEmailException("email이 이미 사용중입니다. " + email.address());
+        }
     }
 
     private void checkDuplicateNickname(String nickname) {

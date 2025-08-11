@@ -1,0 +1,64 @@
+package com.mungdori.sponge.adapter.webapi;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mungdori.sponge.AssertThatUtils;
+import com.mungdori.sponge.application.owner.provided.OwnerRegister;
+import com.mungdori.sponge.domain.owner.OwnerFixture;
+import com.mungdori.sponge.domain.owner.OwnerRegisterRequest;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.assertj.MockMvcTester;
+import org.springframework.test.web.servlet.assertj.MvcTestResult;
+
+import static com.mungdori.sponge.AssertThatUtils.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+
+
+@SpringBootTest
+@AutoConfigureMockMvc
+@Transactional
+@RequiredArgsConstructor
+class OwnerApiTest {
+
+    final MockMvcTester mvcTester;
+    final ObjectMapper objectMapper;
+    final OwnerRegister ownerRegister;
+    @Test
+    void register() throws JsonProcessingException {
+        OwnerRegisterRequest request = OwnerFixture.createOwnerRegisterRequest();
+        String requestJson = objectMapper.writeValueAsString(request);
+
+        MvcTestResult result = mvcTester.post().uri("/api/owner").contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content(requestJson).exchange();
+
+        assertThat(result)
+                .hasStatusOk()
+                .bodyJson()
+                .hasPathSatisfying("$.ownerId", notNull())
+                .hasPathSatisfying("$.email",equalsTo(request) );
+    }
+
+    @Test
+    void duplicateEmail() throws JsonProcessingException {
+        ownerRegister.register(OwnerFixture.createOwnerRegisterRequest());
+
+        OwnerRegisterRequest request = OwnerFixture.createOwnerRegisterRequest("mungdori999@gmail.com","newnick");
+        String requestJson = objectMapper.writeValueAsString(request);
+
+        MvcTestResult result = mvcTester.post().uri("/api/owner").contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content(requestJson).exchange();
+
+        assertThat(result)
+                .apply(print())
+                .hasStatus(HttpStatus.CONFLICT);
+
+    }
+
+}

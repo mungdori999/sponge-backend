@@ -1,11 +1,10 @@
 package com.mungdori.sponge.domain.owner;
 
-import com.mungdori.sponge.domain.shared.GenderType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static com.mungdori.sponge.domain.owner.OwnerFixture.*;
-import static com.mungdori.sponge.domain.shared.GenderType.*;
+import static com.mungdori.sponge.domain.shared.GenderType.MALE;
 import static com.mungdori.sponge.domain.shared.UserStatus.ACTIVE;
 import static com.mungdori.sponge.domain.shared.UserStatus.DEACTIVATED;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -62,7 +61,7 @@ class OwnerTest {
     @Test
     void invalidEmail() {
         assertThatThrownBy(() ->
-                Owner.register(createOwnerRegisterRequest("invalid email"), passwordEncoder)
+                Owner.register(createOwnerRegisterRequest("invalid email","nickname"), passwordEncoder)
         ).isInstanceOf(IllegalArgumentException.class);
 
         Owner.register(createOwnerRegisterRequest(), passwordEncoder);

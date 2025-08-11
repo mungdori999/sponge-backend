@@ -4,13 +4,13 @@ import com.mungdori.sponge.domain.shared.GenderType;
 
 public class OwnerFixture {
 
-    public static OwnerRegisterRequest createOwnerRegisterRequest(String email) {
+    public static OwnerRegisterRequest createOwnerRegisterRequest(String email,String nickname) {
 
-        return new OwnerRegisterRequest(email, "nickname", GenderType.MALE, "01012341234", "longsecret");
+        return new OwnerRegisterRequest(email, nickname, GenderType.MALE, "01012341234", "longsecret");
     }
 
     public static OwnerRegisterRequest createOwnerRegisterRequest() {
-        return createOwnerRegisterRequest("mungdori999@gmail.com");
+        return createOwnerRegisterRequest("mungdori999@gmail.com","nickname");
     }
 
     public static OwnerInfoUpdateRequest createOwnerInfoUpdateRequest(String nickname) {

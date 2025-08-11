@@ -1,9 +1,8 @@
 package com.mungdori.sponge.application.owner.provided;
 
+import com.mungdori.sponge.domain.owner.DuplicateEmailException;
 import com.mungdori.sponge.domain.owner.DuplicateNicknameException;
 import com.mungdori.sponge.domain.owner.Owner;
-import com.mungdori.sponge.domain.owner.OwnerInfoUpdateRequest;
-import com.mungdori.sponge.domain.shared.GenderType;
 import com.mungdori.sponge.domain.shared.UserStatus;
 import jakarta.persistence.EntityManager;
 import jakarta.validation.ConstraintViolationException;
@@ -33,8 +32,16 @@ record OwnerRegisterTest(OwnerRegister ownerRegister, EntityManager entityManage
     void duplicateNicknameFail() {
         ownerRegister.register(createOwnerRegisterRequest());
 
-        assertThatThrownBy(() -> ownerRegister.register(createOwnerRegisterRequest()))
+        assertThatThrownBy(() -> ownerRegister.register(createOwnerRegisterRequest("newemail@naver.com","nickname")))
                 .isInstanceOf(DuplicateNicknameException.class);
+    }
+
+    @Test
+    void duplicateEmailFail() {
+        ownerRegister.register(createOwnerRegisterRequest());
+
+        assertThatThrownBy(() -> ownerRegister.register(createOwnerRegisterRequest("mungdori999@gmail.com","nickname1")))
+                .isInstanceOf(DuplicateEmailException.class);
     }
 
     @Test

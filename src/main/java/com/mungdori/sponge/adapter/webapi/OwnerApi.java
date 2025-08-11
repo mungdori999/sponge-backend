@@ -1,6 +1,8 @@
 package com.mungdori.sponge.adapter.webapi;
 
+import com.mungdori.sponge.adapter.webapi.dto.OwnerRegisterResponse;
 import com.mungdori.sponge.application.owner.provided.OwnerRegister;
+import com.mungdori.sponge.domain.owner.Owner;
 import com.mungdori.sponge.domain.owner.OwnerRegisterRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +18,8 @@ public class OwnerApi {
 
 
     @PostMapping("/api/owner")
-    public void register(@RequestBody @Valid OwnerRegisterRequest registerRequest) {
-
+    public OwnerRegisterResponse register(@RequestBody @Valid OwnerRegisterRequest registerRequest) {
+        Owner owner = ownerRegister.register(registerRequest);
+        return OwnerRegisterResponse.of(owner);
     }
 }

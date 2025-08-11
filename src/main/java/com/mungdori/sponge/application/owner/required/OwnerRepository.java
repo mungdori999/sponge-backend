@@ -1,6 +1,7 @@
 package com.mungdori.sponge.application.owner.required;
 
 import com.mungdori.sponge.domain.owner.Owner;
+import com.mungdori.sponge.domain.shared.Email;
 import org.springframework.data.repository.Repository;
 
 import java.util.Optional;
@@ -11,5 +12,8 @@ public interface OwnerRepository extends Repository<Owner, Long> {
 
     Optional<Owner> findById(Long ownerId);
 
+    Optional<Owner> findByEmail(Email email);
+
     Optional<Owner> findByNickname(String nickName);
+
 }

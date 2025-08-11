@@ -8,7 +8,9 @@ import org.springframework.lang.Nullable;
 public record OwnerInfoUpdateRequest(
         @Size(min = 2, max = 10)
         String nickname,
-        @NonNull GenderType gender,
+
+        @NonNull
+        GenderType gender,
 
         @Nullable
         String phoneNumber
