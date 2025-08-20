@@ -17,7 +17,6 @@ public class OwnerDetail extends AbstractEntity {
 
     private LocalDateTime registeredAt;
 
-    private LocalDateTime activatedAt;
 
     private LocalDateTime deactivatedAt;
 
@@ -26,10 +25,6 @@ public class OwnerDetail extends AbstractEntity {
         OwnerDetail userDetail = new OwnerDetail();
         userDetail.registeredAt = LocalDateTime.now();
         return userDetail;
-    }
-
-    void activate() {
-        activatedAt = LocalDateTime.now();
     }
 
     void deactivate() {

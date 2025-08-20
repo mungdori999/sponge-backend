@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SpringBootTest
 @Transactional
-record OwnerRegisterTest(OwnerRegister ownerRegister, EntityManager entityManager) {
+record OwnerManagerTest(OwnerManager ownerManager, EntityManager entityManager) {
 
     @Test
     void register() {
@@ -30,17 +30,17 @@ record OwnerRegisterTest(OwnerRegister ownerRegister, EntityManager entityManage
 
     @Test
     void duplicateNicknameFail() {
-        ownerRegister.register(createOwnerRegisterRequest());
+        ownerManager.register(createOwnerRegisterRequest());
 
-        assertThatThrownBy(() -> ownerRegister.register(createOwnerRegisterRequest("newemail@naver.com","nickname")))
+        assertThatThrownBy(() -> ownerManager.register(createOwnerRegisterRequest("newemail@naver.com","nickname")))
                 .isInstanceOf(DuplicateNicknameException.class);
     }
 
     @Test
     void duplicateEmailFail() {
-        ownerRegister.register(createOwnerRegisterRequest());
+        ownerManager.register(createOwnerRegisterRequest());
 
-        assertThatThrownBy(() -> ownerRegister.register(createOwnerRegisterRequest("mungdori999@gmail.com","nickname1")))
+        assertThatThrownBy(() -> ownerManager.register(createOwnerRegisterRequest("mungdori999@gmail.com","nickname1")))
                 .isInstanceOf(DuplicateEmailException.class);
     }
 
@@ -48,7 +48,7 @@ record OwnerRegisterTest(OwnerRegister ownerRegister, EntityManager entityManage
     void updateOwnerInfo() {
         Owner owner = registerOwner();
 
-        owner = ownerRegister.update(owner.getId(), createOwnerInfoUpdateRequest("newname"));
+        owner = ownerManager.update(owner.getId(), createOwnerInfoUpdateRequest("newname"));
 
         assertThat(owner.getNickname()).isEqualTo("newname");
     }
@@ -58,20 +58,20 @@ record OwnerRegisterTest(OwnerRegister ownerRegister, EntityManager entityManage
     void updateOwnerInfoFail() {
         Owner owner = registerOwner();
 
-        ownerRegister.update(owner.getId(), createOwnerInfoUpdateRequest("newname"));
+        ownerManager.update(owner.getId(), createOwnerInfoUpdateRequest("newname"));
 
         // 중복 닉네임
-        assertThatThrownBy(() -> ownerRegister.update(owner.getId(), createOwnerInfoUpdateRequest("newname")))
+        assertThatThrownBy(() -> ownerManager.update(owner.getId(), createOwnerInfoUpdateRequest("newname")))
                 .isInstanceOf(DuplicateNicknameException.class);
 
         // 너무 긴 닉네임
-        assertThatThrownBy(() -> ownerRegister.update(owner.getId(),
+        assertThatThrownBy(() -> ownerManager.update(owner.getId(),
                 createOwnerInfoUpdateRequest("longnickname")))
                 .isInstanceOf(ConstraintViolationException.class);
     }
 
     private Owner registerOwner() {
-        Owner owner = ownerRegister.register(createOwnerRegisterRequest());
+        Owner owner = ownerManager.register(createOwnerRegisterRequest());
         entityManager.flush();
         entityManager.clear();
         return owner;

@@ -12,12 +12,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @Transactional
-record OwnerFinderTest(OwnerFinder ownerFinder, OwnerRegister ownerRegister, EntityManager entityManager) {
+record OwnerFinderTest(OwnerFinder ownerFinder, OwnerManager ownerManager, EntityManager entityManager) {
 
 
     @Test
     void ownerFind() {
-        Owner owner = ownerRegister.register(createOwnerRegisterRequest());
+        Owner owner = ownerManager.register(createOwnerRegisterRequest());
 
         entityManager.flush();
         entityManager.clear();

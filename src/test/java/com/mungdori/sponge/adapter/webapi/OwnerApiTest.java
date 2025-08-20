@@ -2,8 +2,7 @@ package com.mungdori.sponge.adapter.webapi;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mungdori.sponge.AssertThatUtils;
-import com.mungdori.sponge.application.owner.provided.OwnerRegister;
+import com.mungdori.sponge.application.owner.provided.OwnerManager;
 import com.mungdori.sponge.domain.owner.OwnerFixture;
 import com.mungdori.sponge.domain.owner.OwnerRegisterRequest;
 import jakarta.transaction.Transactional;
@@ -29,7 +28,7 @@ class OwnerApiTest {
 
     final MockMvcTester mvcTester;
     final ObjectMapper objectMapper;
-    final OwnerRegister ownerRegister;
+    final OwnerManager ownerManager;
     @Test
     void register() throws JsonProcessingException {
         OwnerRegisterRequest request = OwnerFixture.createOwnerRegisterRequest();
@@ -47,7 +46,7 @@ class OwnerApiTest {
 
     @Test
     void duplicateEmail() throws JsonProcessingException {
-        ownerRegister.register(OwnerFixture.createOwnerRegisterRequest());
+        ownerManager.register(OwnerFixture.createOwnerRegisterRequest());
 
         OwnerRegisterRequest request = OwnerFixture.createOwnerRegisterRequest("mungdori999@gmail.com","newnick");
         String requestJson = objectMapper.writeValueAsString(request);

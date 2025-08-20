@@ -5,7 +5,7 @@ import com.mungdori.sponge.domain.owner.OwnerInfoUpdateRequest;
 import com.mungdori.sponge.domain.owner.OwnerRegisterRequest;
 import jakarta.validation.Valid;
 
-public interface OwnerRegister {
+public interface OwnerManager {
 
     Owner register(@Valid OwnerRegisterRequest registerRequest);
 

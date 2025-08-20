@@ -1,7 +1,7 @@
 package com.mungdori.sponge.application.owner;
 
 import com.mungdori.sponge.application.owner.provided.OwnerFinder;
-import com.mungdori.sponge.application.owner.provided.OwnerRegister;
+import com.mungdori.sponge.application.owner.provided.OwnerManager;
 import com.mungdori.sponge.application.owner.required.OwnerRepository;
 import com.mungdori.sponge.domain.owner.*;
 import com.mungdori.sponge.domain.shared.Email;
@@ -14,7 +14,7 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 @Transactional
 @RequiredArgsConstructor
-public class OwnerModifyService implements OwnerRegister {
+public class OwnerModifyService implements OwnerManager {
 
     private final PasswordEncoder passwordEncoder;
     private final OwnerRepository ownerRepository;
