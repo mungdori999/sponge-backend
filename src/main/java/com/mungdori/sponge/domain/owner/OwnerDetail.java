@@ -17,7 +17,6 @@ public class OwnerDetail extends AbstractEntity {
 
     private LocalDateTime registeredAt;
 
-
     private LocalDateTime deactivatedAt;
 
 
