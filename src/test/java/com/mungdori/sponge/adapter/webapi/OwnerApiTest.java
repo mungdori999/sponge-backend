@@ -15,7 +15,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.assertj.MockMvcTester;
 import org.springframework.test.web.servlet.assertj.MvcTestResult;
 
-import static com.mungdori.sponge.AssertThatUtils.*;
+import static com.mungdori.sponge.AssertThatUtils.equalsTo;
+import static com.mungdori.sponge.AssertThatUtils.notNull;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 

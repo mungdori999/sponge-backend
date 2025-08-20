@@ -2,6 +2,7 @@ package com.mungdori.sponge.domain.owner;
 
 
 import com.mungdori.sponge.domain.AbstractEntity;
+import com.mungdori.sponge.domain.pet.Pet;
 import com.mungdori.sponge.domain.shared.Email;
 import com.mungdori.sponge.domain.shared.GenderType;
 import com.mungdori.sponge.domain.shared.UserStatus;
@@ -13,6 +14,8 @@ import lombok.ToString;
 import org.hibernate.annotations.NaturalId;
 import org.hibernate.annotations.NaturalIdCache;
 import org.springframework.util.Assert;
+
+import java.util.List;
 
 import static java.util.Objects.requireNonNull;
 import static org.springframework.util.Assert.state;
@@ -38,6 +41,9 @@ public class Owner extends AbstractEntity {
     private UserStatus status;
 
     private OwnerDetail detail;
+
+
+    private List<Pet> petList;
 
     public static Owner register(OwnerRegisterRequest registerRequest, PasswordEncoder passwordEncoder) {
         Owner owner = new Owner();

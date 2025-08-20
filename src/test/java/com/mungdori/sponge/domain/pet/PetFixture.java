@@ -7,4 +7,8 @@ public class PetFixture {
 
         return new PetRegisterRequest("바둑이", "웰시코기", GenderType.MALE, 22, 1.5f);
     }
+    public static PetInfoUpdateRequest createPetInfoUpdateRequest() {
+
+        return new PetInfoUpdateRequest("수정바둑이", "웰시코기", GenderType.MALE, 23, 2.5f);
+    }
 }

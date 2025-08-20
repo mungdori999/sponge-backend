@@ -42,11 +42,18 @@
                 <column name="status" nullable="false" length="50"/>
                 <enumerated>STRING</enumerated>
             </basic>
+
             <one-to-one name="detail" fetch="LAZY">
                 <cascade>
                     <cascade-all />
                 </cascade>
             </one-to-one>
+
+            <one-to-many name="petList" mapped-by="owner" target-entity="com.mungdori.sponge.domain.pet.Pet">
+                <cascade>
+                    <cascade-all/>
+                </cascade>
+            </one-to-many>
             <embedded name="email">
             </embedded>
         </attributes>
