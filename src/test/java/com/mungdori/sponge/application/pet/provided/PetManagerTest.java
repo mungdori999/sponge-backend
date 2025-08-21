@@ -26,7 +26,7 @@ record PetManagerTest(PetModifyService modifyService, EntityManager entityManage
     }
 
     @Test
-    void updatePet() {
+    void update() {
         Pet pet = modifyService.register(createPetRegisterRequest());
         entityManager.flush();
         entityManager.clear();

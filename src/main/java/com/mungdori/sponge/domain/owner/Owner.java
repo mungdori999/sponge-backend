@@ -22,7 +22,7 @@ import static org.springframework.util.Assert.state;
 
 @Getter
 @Entity
-@ToString(callSuper = true, exclude = "detail")
+@ToString(callSuper = true, exclude = {"detail", "petList"})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @NaturalIdCache
 public class Owner extends AbstractEntity {
@@ -41,7 +41,6 @@ public class Owner extends AbstractEntity {
     private UserStatus status;
 
     private OwnerDetail detail;
-
 
     private List<Pet> petList;
 

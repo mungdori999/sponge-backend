@@ -24,6 +24,7 @@ record OwnerFinderTest(OwnerFinder ownerFinder, OwnerManager ownerManager, Entit
 
         Owner found = ownerFinder.find(owner.getId());
         assertThat(found.getId()).isEqualTo(owner.getId());
+
     }
 
     @Test
