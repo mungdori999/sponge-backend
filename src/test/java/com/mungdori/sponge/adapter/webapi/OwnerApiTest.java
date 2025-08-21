@@ -3,7 +3,9 @@ package com.mungdori.sponge.adapter.webapi;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mungdori.sponge.application.owner.provided.OwnerManager;
+import com.mungdori.sponge.domain.owner.Owner;
 import com.mungdori.sponge.domain.owner.OwnerFixture;
+import com.mungdori.sponge.domain.owner.OwnerInfoUpdateRequest;
 import com.mungdori.sponge.domain.owner.OwnerRegisterRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +32,7 @@ class OwnerApiTest {
     final MockMvcTester mvcTester;
     final ObjectMapper objectMapper;
     final OwnerManager ownerManager;
+
     @Test
     void register() throws JsonProcessingException {
         OwnerRegisterRequest request = OwnerFixture.createOwnerRegisterRequest();
@@ -42,14 +45,32 @@ class OwnerApiTest {
                 .hasStatusOk()
                 .bodyJson()
                 .hasPathSatisfying("$.ownerId", notNull())
-                .hasPathSatisfying("$.email",equalsTo(request) );
+                .hasPathSatisfying("$.email", equalsTo(request));
     }
+
+    @Test
+    void update() throws JsonProcessingException {
+        Owner owner = ownerManager.register(OwnerFixture.createOwnerRegisterRequest());
+
+        OwnerInfoUpdateRequest request = OwnerFixture.createOwnerInfoUpdateRequest("newnick");
+        String requestJson = objectMapper.writeValueAsString(request);
+
+        MvcTestResult result = mvcTester.patch().uri("/api/owner/{id}", owner.getId()).contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content(requestJson).exchange();
+
+        assertThat(result)
+                .hasStatusOk()
+                .bodyJson()
+                .hasPathSatisfying("$.ownerId", notNull())
+                .hasPathSatisfying("$.nickname", equalsTo(request));
+    }
+
 
     @Test
     void duplicateEmail() throws JsonProcessingException {
         ownerManager.register(OwnerFixture.createOwnerRegisterRequest());
 
-        OwnerRegisterRequest request = OwnerFixture.createOwnerRegisterRequest("mungdori999@gmail.com","newnick");
+        OwnerRegisterRequest request = OwnerFixture.createOwnerRegisterRequest("mungdori999@gmail.com", "newnick");
         String requestJson = objectMapper.writeValueAsString(request);
 
         MvcTestResult result = mvcTester.post().uri("/api/owner").contentType(MediaType.APPLICATION_JSON_VALUE)

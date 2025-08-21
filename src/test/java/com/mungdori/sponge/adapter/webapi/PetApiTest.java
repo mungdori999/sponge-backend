@@ -2,7 +2,13 @@ package com.mungdori.sponge.adapter.webapi;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mungdori.sponge.application.pet.provided.PetManager;
+import com.mungdori.sponge.domain.owner.Owner;
+import com.mungdori.sponge.domain.owner.OwnerFixture;
+import com.mungdori.sponge.domain.owner.OwnerInfoUpdateRequest;
+import com.mungdori.sponge.domain.pet.Pet;
 import com.mungdori.sponge.domain.pet.PetFixture;
+import com.mungdori.sponge.domain.pet.PetInfoUpdateRequest;
 import com.mungdori.sponge.domain.pet.PetRegisterRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +20,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.assertj.MockMvcTester;
 import org.springframework.test.web.servlet.assertj.MvcTestResult;
 
+import static com.mungdori.sponge.AssertThatUtils.equalsTo;
 import static com.mungdori.sponge.AssertThatUtils.notNull;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -26,6 +33,7 @@ class PetApiTest {
 
     final MockMvcTester mvcTester;
     final ObjectMapper objectMapper;
+    final PetManager petManager;
 
     @Test
     void register() throws JsonProcessingException {
@@ -39,6 +47,23 @@ class PetApiTest {
                 .hasStatusOk()
                 .bodyJson()
                 .hasPathSatisfying("$.petId", notNull());
+    }
+
+    @Test
+    void update() throws JsonProcessingException {
+        Pet pet = petManager.register(PetFixture.createPetRegisterRequest());
+
+        PetInfoUpdateRequest request = PetFixture.createPetInfoUpdateRequest();
+        String requestJson = objectMapper.writeValueAsString(request);
+
+        MvcTestResult result = mvcTester.patch().uri("/api/pet/{id}", pet.getId()).contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content(requestJson).exchange();
+
+        assertThat(result)
+                .hasStatusOk()
+                .bodyJson()
+                .hasPathSatisfying("$.petId", notNull())
+                .hasPathSatisfying("$.name", equalsTo(request));
     }
 
     @Test

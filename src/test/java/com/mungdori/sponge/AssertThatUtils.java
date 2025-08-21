@@ -1,6 +1,8 @@
 package com.mungdori.sponge;
 
+import com.mungdori.sponge.domain.owner.OwnerInfoUpdateRequest;
 import com.mungdori.sponge.domain.owner.OwnerRegisterRequest;
+import com.mungdori.sponge.domain.pet.PetInfoUpdateRequest;
 import org.assertj.core.api.AssertProvider;
 import org.springframework.test.json.JsonPathValueAssert;
 
@@ -15,5 +17,12 @@ public class AssertThatUtils {
     }
     public static Consumer<AssertProvider<JsonPathValueAssert>> equalsTo(OwnerRegisterRequest request) {
         return value -> assertThat(value).isEqualTo(request.email());
+    }
+    public static Consumer<AssertProvider<JsonPathValueAssert>> equalsTo(OwnerInfoUpdateRequest request) {
+        return value -> assertThat(value).isEqualTo(request.nickname());
+    }
+
+    public static Consumer<AssertProvider<JsonPathValueAssert>> equalsTo(PetInfoUpdateRequest request) {
+        return value -> assertThat(value).isEqualTo(request.name());
     }
 }
