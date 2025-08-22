@@ -19,6 +19,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.assertj.MockMvcTester;
 import org.springframework.test.web.servlet.assertj.MvcTestResult;
 
+import java.util.Objects;
+
 import static com.mungdori.sponge.AssertThatUtils.equalsTo;
 import static com.mungdori.sponge.AssertThatUtils.notNull;
 import static com.mungdori.sponge.domain.owner.OwnerFixture.createOwnerRegisterRequest;
@@ -44,7 +46,7 @@ class PetApiTest {
         PetRegisterRequest request = PetFixture.createPetRegisterRequest();
         String requestJson = objectMapper.writeValueAsString(request);
 
-        MvcTestResult result = mvcTester.post().uri("/api/pet").param("ownerId", owner.getId().toString())
+        MvcTestResult result = mvcTester.post().uri("/api/pet").param("ownerId", Objects.requireNonNull(owner.getId()).toString())
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(requestJson).exchange();
 

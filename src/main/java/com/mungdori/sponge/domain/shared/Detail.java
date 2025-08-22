@@ -1,4 +1,4 @@
-package com.mungdori.sponge.domain.owner;
+package com.mungdori.sponge.domain.shared;
 
 import com.mungdori.sponge.domain.AbstractEntity;
 import jakarta.persistence.Entity;
@@ -13,20 +13,20 @@ import java.time.LocalDateTime;
 @ToString(callSuper = true)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class OwnerDetail extends AbstractEntity {
+public class Detail extends AbstractEntity {
 
     private LocalDateTime registeredAt;
 
     private LocalDateTime deactivatedAt;
 
 
-    static OwnerDetail create() {
-        OwnerDetail userDetail = new OwnerDetail();
-        userDetail.registeredAt = LocalDateTime.now();
-        return userDetail;
+    public static Detail create() {
+        Detail detail = new Detail();
+        detail.registeredAt = LocalDateTime.now();
+        return detail;
     }
 
-    void deactivate() {
+    public void deactivate() {
         deactivatedAt = LocalDateTime.now();
     }
 }

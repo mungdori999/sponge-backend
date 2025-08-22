@@ -5,6 +5,7 @@ import com.mungdori.sponge.domain.AbstractEntity;
 import com.mungdori.sponge.domain.pet.Pet;
 import com.mungdori.sponge.domain.shared.Email;
 import com.mungdori.sponge.domain.shared.GenderType;
+import com.mungdori.sponge.domain.shared.Detail;
 import com.mungdori.sponge.domain.shared.UserStatus;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -58,10 +59,10 @@ public class Owner extends AbstractEntity {
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "detail_id")
-    private OwnerDetail detail;
+    private Detail detail;
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
-    private List<Pet> petList = new ArrayList<>();
+    private  List<Pet> petList = new ArrayList<>();
 
     public static Owner register(OwnerRegisterRequest registerRequest, PasswordEncoder passwordEncoder) {
         Owner owner = new Owner();
@@ -72,7 +73,8 @@ public class Owner extends AbstractEntity {
         owner.phoneNumber = registerRequest.phoneNumber();
         owner.passwordHash = passwordEncoder.encode(requireNonNull(registerRequest.password()));
         owner.status = UserStatus.ACTIVE;
-        owner.detail = OwnerDetail.create();
+        owner.detail = Detail.create();
+
         return owner;
     }
 
