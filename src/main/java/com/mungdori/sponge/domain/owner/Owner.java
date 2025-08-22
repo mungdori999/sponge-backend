@@ -6,7 +6,7 @@ import com.mungdori.sponge.domain.pet.Pet;
 import com.mungdori.sponge.domain.shared.Email;
 import com.mungdori.sponge.domain.shared.GenderType;
 import com.mungdori.sponge.domain.shared.UserStatus;
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,6 +15,7 @@ import org.hibernate.annotations.NaturalId;
 import org.hibernate.annotations.NaturalIdCache;
 import org.springframework.util.Assert;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.Objects.requireNonNull;
@@ -25,24 +26,42 @@ import static org.springframework.util.Assert.state;
 @ToString(callSuper = true, exclude = {"detail", "petList"})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @NaturalIdCache
+@Table(
+        name = "owner",
+        uniqueConstraints = {
+                @UniqueConstraint(name = "UK_OWNER_EMAIL_ADDRESS", columnNames = "email_address"),
+                @UniqueConstraint(name = "UK_OWNER_DETAIL_ID", columnNames = "detail_id")
+        }
+)
 public class Owner extends AbstractEntity {
 
     @NaturalId
+    @Embedded
     private Email email;
 
+    @Column(name = "nickname", nullable = false, length = 100)
     private String nickname;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "gender", nullable = false, length = 50)
     private GenderType gender;
 
+    @Column(name = "phone_number", nullable = false, length = 100)
     private String phoneNumber;
 
+    @Column(name = "password_hash", nullable = false, length = 200)
     private String passwordHash;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false, length = 50)
     private UserStatus status;
 
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "detail_id")
     private OwnerDetail detail;
 
-    private List<Pet> petList;
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
+    private List<Pet> petList = new ArrayList<>();
 
     public static Owner register(OwnerRegisterRequest registerRequest, PasswordEncoder passwordEncoder) {
         Owner owner = new Owner();

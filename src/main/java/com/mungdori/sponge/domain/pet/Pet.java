@@ -15,23 +15,28 @@ import static java.util.Objects.requireNonNull;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Pet extends AbstractEntity {
 
+    @Column(name = "name", nullable = false, length = 100)
     private String name;
 
+    @Column(name = "breed", nullable = false, length = 100)
     private String breed;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "gender", nullable = false, length = 50)
     private GenderType gender;
 
+    @Column(name = "age", nullable = false)
     private int age;
 
+    @Column(name = "weight", nullable = false)
     private float weight;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id")
     private Owner owner;
 
 
-    public static Pet register(PetRegisterRequest registerRequest) {
+    public static Pet register(PetRegisterRequest registerRequest, Owner owner) {
         Pet pet = new Pet();
 
         pet.name = requireNonNull(registerRequest.name());
@@ -39,7 +44,9 @@ public class Pet extends AbstractEntity {
         pet.gender = requireNonNull(registerRequest.gender());
         pet.age = registerRequest.age();
         pet.weight = registerRequest.weight();
+        pet.owner = owner;
 
+        owner.getPetList().add(pet);
         return pet;
     }
 

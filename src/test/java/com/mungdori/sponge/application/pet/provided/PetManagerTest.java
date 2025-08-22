@@ -1,12 +1,15 @@
 package com.mungdori.sponge.application.pet.provided;
 
 import com.mungdori.sponge.application.pet.PetModifyService;
+import com.mungdori.sponge.domain.owner.Owner;
 import com.mungdori.sponge.domain.pet.Pet;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import static com.mungdori.sponge.domain.owner.OwnerFixture.createOwnerRegisterRequest;
+import static com.mungdori.sponge.domain.owner.OwnerFixture.createPasswordEncoder;
 import static com.mungdori.sponge.domain.pet.PetFixture.createPetInfoUpdateRequest;
 import static com.mungdori.sponge.domain.pet.PetFixture.createPetRegisterRequest;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -18,16 +21,21 @@ record PetManagerTest(PetModifyService modifyService, EntityManager entityManage
 
     @Test
     void register() {
-        Pet pet = modifyService.register(createPetRegisterRequest());
+        Owner owner = createOwner();
+
+        Pet pet = modifyService.register(createPetRegisterRequest(), owner.getId());
 
         assertThat(pet.getId()).isNotNull();
         assertThat(pet.getWeight()).isGreaterThan(0);
+        assertThat(pet.getOwner().getId()).isEqualTo(owner.getId());
 
     }
 
     @Test
     void update() {
-        Pet pet = modifyService.register(createPetRegisterRequest());
+        Owner owner = createOwner();
+
+        Pet pet = modifyService.register(createPetRegisterRequest(), owner.getId());
         entityManager.flush();
         entityManager.clear();
 
@@ -37,6 +45,19 @@ record PetManagerTest(PetModifyService modifyService, EntityManager entityManage
         assertThat(pet.getId()).isNotNull();
         assertThat(pet.getName()).isEqualTo(request.name());
 
+
     }
+
+    Owner createOwner() {
+        Owner owner = Owner.register(createOwnerRegisterRequest(), createPasswordEncoder());
+
+        entityManager.persist(owner);
+
+        entityManager.flush();
+        entityManager.clear();
+
+        return owner;
+    }
+
 
 }

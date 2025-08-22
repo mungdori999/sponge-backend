@@ -18,13 +18,13 @@ public class PetApi {
 
 
     @PostMapping("/api/pet")
-    public PetRegisterResponse register(@RequestBody @Valid PetRegisterRequest petRegisterRequest) {
-        Pet pet = petManager.register(petRegisterRequest);
+    public PetRegisterResponse register(@RequestBody @Valid PetRegisterRequest petRegisterRequest, @RequestParam Long ownerId) {
+        Pet pet = petManager.register(petRegisterRequest,ownerId);
         return PetRegisterResponse.of(pet);
     }
 
     @PatchMapping("/api/pet/{petId}")
-    public PetInfoUpdateResponse register(@PathVariable Long petId, @RequestBody @Valid PetInfoUpdateRequest petInfoUpdateRequest) {
+    public PetInfoUpdateResponse update(@PathVariable Long petId, @RequestBody @Valid PetInfoUpdateRequest petInfoUpdateRequest) {
         Pet pet = petManager.update(petId, petInfoUpdateRequest);
         return PetInfoUpdateResponse.of(pet);
     }

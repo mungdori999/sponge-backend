@@ -7,7 +7,7 @@ import jakarta.validation.Valid;
 
 public interface PetManager {
 
-    Pet register(@Valid PetRegisterRequest registerRequest);
+    Pet register(@Valid PetRegisterRequest registerRequest, Long ownerId);
 
     Pet update(Long petId, @Valid PetInfoUpdateRequest updateRequest);
 }

@@ -1,10 +1,16 @@
 package com.mungdori.sponge.application.pet.required;
 
+import com.mungdori.sponge.domain.owner.Owner;
+import com.mungdori.sponge.domain.owner.OwnerFixture;
+import com.mungdori.sponge.domain.owner.OwnerRegisterRequest;
 import com.mungdori.sponge.domain.pet.Pet;
 import jakarta.persistence.EntityManager;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import static com.mungdori.sponge.domain.owner.OwnerFixture.createOwnerRegisterRequest;
+import static com.mungdori.sponge.domain.owner.OwnerFixture.createPasswordEncoder;
 import static com.mungdori.sponge.domain.pet.PetFixture.createPetRegisterRequest;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -13,7 +19,8 @@ record PetRepositoryTest(PetRepository petRepository, EntityManager entityManage
 
     @Test
     void createPet() {
-        Pet pet = Pet.register(createPetRegisterRequest());
+        Owner owner = createOwner();
+        Pet pet = Pet.register(createPetRegisterRequest(), owner);
 
         assertThat(pet.getId()).isNull();
 
@@ -21,6 +28,17 @@ record PetRepositoryTest(PetRepository petRepository, EntityManager entityManage
 
         assertThat(pet.getId()).isNotNull();
 
+    }
+
+    Owner createOwner() {
+        Owner owner = Owner.register(createOwnerRegisterRequest(), createPasswordEncoder());
+
+        entityManager.persist(owner);
+
+        entityManager.flush();
+        entityManager.clear();
+
+        return owner;
     }
 
 }

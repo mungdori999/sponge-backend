@@ -4,12 +4,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mungdori.sponge.application.pet.provided.PetManager;
 import com.mungdori.sponge.domain.owner.Owner;
-import com.mungdori.sponge.domain.owner.OwnerFixture;
-import com.mungdori.sponge.domain.owner.OwnerInfoUpdateRequest;
 import com.mungdori.sponge.domain.pet.Pet;
 import com.mungdori.sponge.domain.pet.PetFixture;
 import com.mungdori.sponge.domain.pet.PetInfoUpdateRequest;
 import com.mungdori.sponge.domain.pet.PetRegisterRequest;
+import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -22,6 +21,8 @@ import org.springframework.test.web.servlet.assertj.MvcTestResult;
 
 import static com.mungdori.sponge.AssertThatUtils.equalsTo;
 import static com.mungdori.sponge.AssertThatUtils.notNull;
+import static com.mungdori.sponge.domain.owner.OwnerFixture.createOwnerRegisterRequest;
+import static com.mungdori.sponge.domain.owner.OwnerFixture.createPasswordEncoder;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
@@ -33,14 +34,18 @@ class PetApiTest {
 
     final MockMvcTester mvcTester;
     final ObjectMapper objectMapper;
+    final EntityManager entityManager;
     final PetManager petManager;
 
     @Test
     void register() throws JsonProcessingException {
+        Owner owner = createOwner();
+
         PetRegisterRequest request = PetFixture.createPetRegisterRequest();
         String requestJson = objectMapper.writeValueAsString(request);
 
-        MvcTestResult result = mvcTester.post().uri("/api/pet").contentType(MediaType.APPLICATION_JSON_VALUE)
+        MvcTestResult result = mvcTester.post().uri("/api/pet").param("ownerId", owner.getId().toString())
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(requestJson).exchange();
 
         assertThat(result)
@@ -51,7 +56,8 @@ class PetApiTest {
 
     @Test
     void update() throws JsonProcessingException {
-        Pet pet = petManager.register(PetFixture.createPetRegisterRequest());
+        Owner owner = createOwner();
+        Pet pet = petManager.register(PetFixture.createPetRegisterRequest(), owner.getId());
 
         PetInfoUpdateRequest request = PetFixture.createPetInfoUpdateRequest();
         String requestJson = objectMapper.writeValueAsString(request);
@@ -78,4 +84,17 @@ class PetApiTest {
                 .apply(print())
                 .hasStatus(HttpStatus.BAD_REQUEST);
     }
+
+    Owner createOwner() {
+        Owner owner = Owner.register(createOwnerRegisterRequest(), createPasswordEncoder());
+
+        entityManager.persist(owner);
+
+        entityManager.flush();
+        entityManager.clear();
+
+        return owner;
+    }
+
+
 }
