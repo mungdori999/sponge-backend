@@ -1,11 +1,11 @@
 package com.mungdori.sponge.domain.pet;
 
 import com.mungdori.sponge.domain.owner.Owner;
-import com.mungdori.sponge.domain.owner.OwnerFixture;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static com.mungdori.sponge.domain.owner.OwnerFixture.*;
+import static com.mungdori.sponge.domain.owner.OwnerFixture.createOwnerRegisterRequest;
+import static com.mungdori.sponge.domain.owner.OwnerFixture.createPasswordEncoder;
 import static com.mungdori.sponge.domain.pet.PetFixture.createPetInfoUpdateRequest;
 import static com.mungdori.sponge.domain.pet.PetFixture.createPetRegisterRequest;
 import static org.assertj.core.api.Assertions.assertThat;

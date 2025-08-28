@@ -1,11 +1,8 @@
 package com.mungdori.sponge.application.pet.required;
 
 import com.mungdori.sponge.domain.owner.Owner;
-import com.mungdori.sponge.domain.owner.OwnerFixture;
-import com.mungdori.sponge.domain.owner.OwnerRegisterRequest;
 import com.mungdori.sponge.domain.pet.Pet;
 import jakarta.persistence.EntityManager;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
