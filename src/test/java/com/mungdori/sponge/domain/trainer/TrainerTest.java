@@ -26,6 +26,7 @@ class TrainerTest {
     void register() {
         assertThat(trainer.getStatus()).isEqualTo(UserStatus.ACTIVE);
         assertThat(trainer.getDetail().getRegisteredAt()).isNotNull();
+        assertThat(trainer.getHistoryList()).isNotEmpty();
     }
 
     @Test

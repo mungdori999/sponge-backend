@@ -7,6 +7,8 @@ import jakarta.validation.constraints.Size;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
+import java.util.List;
+
 public record TrainerRegisterRequest(@Email
                                      String email,
                                      @Size(min = 2, max = 10)
@@ -20,5 +22,8 @@ public record TrainerRegisterRequest(@Email
                                      @Nullable
                                      String introduction,
                                      @Min(0)
-                                     int employmentYear) {
+                                     int employmentYear,
+
+                                     List<HistoryCreateRequest> historyCreateRequestList
+                                     ) {
 }

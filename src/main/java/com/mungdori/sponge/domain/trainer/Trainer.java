@@ -10,9 +10,12 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.NaturalId;
 
-import java.util.Objects;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static java.util.Objects.*;
 import static org.springframework.util.Assert.state;
@@ -59,6 +62,9 @@ public class Trainer extends AbstractEntity {
     @JoinColumn(name = "detail_id")
     private Detail detail;
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "trainer")
+    private List<History> historyList = new ArrayList<>();
+
 
     public static Trainer register(TrainerRegisterRequest registerRequest, PasswordEncoder passwordEncoder) {
         Trainer trainer = new Trainer();
@@ -73,6 +79,10 @@ public class Trainer extends AbstractEntity {
 
         trainer.status = UserStatus.ACTIVE;
         trainer.detail = Detail.create();
+
+        registerRequest.historyCreateRequestList().forEach(history -> {
+            History.create(history, trainer);
+        });
         return trainer;
     }
 

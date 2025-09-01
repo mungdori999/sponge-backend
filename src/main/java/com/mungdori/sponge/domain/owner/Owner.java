@@ -24,7 +24,7 @@ import static org.springframework.util.Assert.state;
 
 @Getter
 @Entity
-@ToString(callSuper = true, exclude = {"detail", "petList"})
+@ToString(callSuper = true, exclude = {"detail"})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @NaturalIdCache
 @Table(
@@ -60,9 +60,6 @@ public class Owner extends AbstractEntity {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "detail_id")
     private Detail detail;
-
-    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
-    private  List<Pet> petList = new ArrayList<>();
 
     public static Owner register(OwnerRegisterRequest registerRequest, PasswordEncoder passwordEncoder) {
         Owner owner = new Owner();

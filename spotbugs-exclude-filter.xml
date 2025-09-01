@@ -4,6 +4,6 @@
     </Match>
     <Match>
         <Class name="com.mungdori.sponge.domain.owner.Owner"/>
-        <Field name="petList"/>
+        <Field name="historyList"/>
     </Match>
 </FindBugsFilter>

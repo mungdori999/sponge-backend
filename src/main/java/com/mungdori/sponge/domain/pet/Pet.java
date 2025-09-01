@@ -46,7 +46,6 @@ public class Pet extends AbstractEntity {
         pet.weight = registerRequest.weight();
         pet.owner = owner;
 
-        owner.getPetList().add(pet);
         return pet;
     }
 
