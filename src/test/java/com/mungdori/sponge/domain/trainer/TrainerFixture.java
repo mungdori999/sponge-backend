@@ -17,12 +17,17 @@ public class TrainerFixture {
         return createTrainerRegisterRequest("mungdori999@gmail.com", "nickname");
     }
 
-    public static List<HistoryCreateRequest> createHistoryCreateRequest() {
+    private static List<HistoryCreateRequest> createHistoryCreateRequest() {
         List<HistoryCreateRequest> list = new ArrayList<>();
         list.add(new HistoryCreateRequest("title1", "201201", "202002", "description1"));
         list.add(new HistoryCreateRequest("title2", "202003", "202105", "description2"));
         list.add(new HistoryCreateRequest("title3", "202106", "202212", "description3"));
         return list;
+    }
+
+    public static TrainerUpdateRequest createTrainerUpdateRequest() {
+
+        return new TrainerUpdateRequest("newnick", GenderType.MALE, "01011112222",  "new introduction", 1, createHistoryCreateRequest());
     }
 
 

@@ -6,9 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static com.mungdori.sponge.domain.shared.UserStatus.DEACTIVATED;
-import static com.mungdori.sponge.domain.trainer.TrainerFixture.createPasswordEncoder;
-import static com.mungdori.sponge.domain.trainer.TrainerFixture.createTrainerRegisterRequest;
-import static org.assertj.core.api.Assertions.*;
+import static com.mungdori.sponge.domain.trainer.TrainerFixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class TrainerTest {
@@ -51,4 +49,13 @@ class TrainerTest {
         assertThat(trainer.verifyPassword("changePassword", passwordEncoder)).isTrue();
     }
 
+
+    @Test
+    void updateInfo() {
+        var request = createTrainerUpdateRequest();
+        trainer.updateInfo(request);
+
+        assertThat(trainer.getNickname()).isEqualTo(request.nickname());
+        assertThat(trainer.getHistoryList()).hasSize(request.historyCreateRequestList().size());
+    }
 }

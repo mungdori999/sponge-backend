@@ -36,7 +36,7 @@ record OwnerRepositoryTest(OwnerRepository ownerRepository, EntityManager entity
 
 
     @Test
-    void duplicateNickname() {
+    void duplicateEmail() {
         Owner owner = Owner.register(createOwnerRegisterRequest(), createPasswordEncoder());
         ownerRepository.save(owner);
 

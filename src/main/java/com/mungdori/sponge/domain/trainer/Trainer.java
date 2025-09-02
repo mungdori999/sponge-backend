@@ -10,7 +10,6 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 import org.hibernate.annotations.NaturalId;
 
 
@@ -26,7 +25,7 @@ import static org.springframework.util.Assert.state;
 @Table(
         name = "trainer",
         uniqueConstraints = {
-                @UniqueConstraint(name = "UK_OWNER_EMAIL_ADDRESS", columnNames = "email_address"),
+                @UniqueConstraint(name = "UK_TRAINER_EMAIL_ADDRESS", columnNames = "email_address"),
         }
 )
 public class Trainer extends AbstractEntity {
@@ -86,6 +85,22 @@ public class Trainer extends AbstractEntity {
         return trainer;
     }
 
+    public void updateInfo(TrainerUpdateRequest updateRequest) {
+        state(status == UserStatus.ACTIVE, "ACTIVE 상태가 아닙니다");
+
+        this.nickname = requireNonNull(updateRequest.nickname());
+        this.gender = requireNonNull(updateRequest.gender());
+        this.phoneNumber = requireNonNull(updateRequest.phoneNumber());
+        this.introduction = requireNonNull(updateRequest.introduction());
+        this.employmentYear = updateRequest.employmentYear();
+
+        historyList.clear();
+
+        updateRequest.historyCreateRequestList().forEach(history -> {
+            History.create(history, this);
+        });
+    }
+
     public void deactivate() {
         state(status == UserStatus.ACTIVE, "ACTIVE 상태가 아닙니다");
 
@@ -100,4 +115,6 @@ public class Trainer extends AbstractEntity {
     public void changePassword(String password, PasswordEncoder passwordEncoder) {
         this.passwordHash = passwordEncoder.encode(requireNonNull(password));
     }
+
+
 }

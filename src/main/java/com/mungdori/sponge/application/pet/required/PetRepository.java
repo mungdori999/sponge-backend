@@ -9,6 +9,6 @@ public interface PetRepository extends Repository<Pet,Long> {
 
     Pet save(Pet pet);
 
-    Optional<Pet> findById(Long id);
+    Optional<Pet> findById(Long petId);
 
 }
