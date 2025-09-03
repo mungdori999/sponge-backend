@@ -1,6 +1,6 @@
 package com.mungdori.sponge.adapter.security.config;
 
-import com.mungdori.sponge.adapter.security.LoginFilter;
+import com.mungdori.sponge.adapter.security.filter.LoginFilter;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;

@@ -8,12 +8,12 @@ import java.util.Collection;
 public class UserDetailsImpl implements UserDetails {
 
     private final String email;
-    private final String password;
+    private final String passwordHash;
     private final Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetailsImpl(String email, String password, Collection<? extends GrantedAuthority> authorities) {
+    public UserDetailsImpl(String email, String passwordHash, Collection<? extends GrantedAuthority> authorities) {
         this.email = email;
-        this.password = password;
+        this.passwordHash = passwordHash;
         this.authorities = authorities;
     }
 
@@ -24,7 +24,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public String getPassword() {
-        return password;
+        return passwordHash;
     }
 
     @Override

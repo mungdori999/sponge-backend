@@ -1,4 +1,4 @@
-package com.mungdori.sponge.adapter.security;
+package com.mungdori.sponge.adapter.security.handler;
 
 import com.mungdori.sponge.adapter.jwt.JWTUtil;
 import com.mungdori.sponge.application.token.provided.JWTManager;

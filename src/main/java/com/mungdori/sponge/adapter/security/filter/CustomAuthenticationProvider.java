@@ -1,5 +1,8 @@
-package com.mungdori.sponge.adapter.security;
+package com.mungdori.sponge.adapter.security.filter;
 
+import com.mungdori.sponge.adapter.security.LoginTypeAuthenticationToken;
+import com.mungdori.sponge.adapter.security.SecurePasswordEncoder;
+import com.mungdori.sponge.adapter.security.UserDetailsImpl;
 import com.mungdori.sponge.application.owner.required.OwnerRepository;
 import com.mungdori.sponge.application.trainer.required.TrainerRepository;
 import com.mungdori.sponge.domain.shared.Email;
@@ -14,8 +17,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static com.mungdori.sponge.adapter.security.utils.LoginType.OWNER;
-import static com.mungdori.sponge.adapter.security.utils.LoginType.TRAINER;
+import static com.mungdori.sponge.adapter.security.utils.LoginType.*;
+
 
 @Component
 @RequiredArgsConstructor
@@ -43,13 +46,13 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         if (OWNER.name().equalsIgnoreCase(loginType)) {
             userDetails = ownerRepository.findByEmail(new Email(email))
                     .map(owner -> new UserDetailsImpl(owner.getEmail().address(), owner.getPasswordHash(),
-                            List.of(new SimpleGrantedAuthority("ROLE_OWNER"))))
+                            List.of(new SimpleGrantedAuthority(OWNER.name()))))
                     .orElseThrow(() -> new BadCredentialsException("Owner not found"));
 
         } else if (TRAINER.name().equalsIgnoreCase(loginType)) {
             userDetails = trainerRepository.findByEmail(new Email(email))
                     .map(trainer -> new UserDetailsImpl(trainer.getEmail().address(), trainer.getPasswordHash(),
-                            List.of(new SimpleGrantedAuthority("ROLE_TRAINER"))))
+                            List.of(new SimpleGrantedAuthority(TRAINER.name()))))
                     .orElseThrow(() -> new BadCredentialsException("Trainer not found"));
         } else {
             throw new BadCredentialsException("Invalid loginType");

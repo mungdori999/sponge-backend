@@ -8,8 +8,8 @@ import org.springframework.dao.DataIntegrityViolationException;
 
 import static com.mungdori.sponge.domain.trainer.TrainerFixture.createPasswordEncoder;
 import static com.mungdori.sponge.domain.trainer.TrainerFixture.createTrainerRegisterRequest;
-import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DataJpaTest
 record TrainerRepositoryTest(TrainerRepository trainerRepository, EntityManager entityManager) {

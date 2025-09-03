@@ -1,7 +1,8 @@
-package com.mungdori.sponge.adapter.security;
+package com.mungdori.sponge.adapter.security.filter;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mungdori.sponge.adapter.security.LoginTypeAuthenticationToken;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletInputStream;
