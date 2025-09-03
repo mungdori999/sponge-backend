@@ -22,7 +22,7 @@ import static com.mungdori.sponge.adapter.security.utils.LoginType.*;
 
 @Component
 @RequiredArgsConstructor
-public class CustomAuthenticationProvider implements AuthenticationProvider {
+public class LoginAuthenticationProvider implements AuthenticationProvider {
 
     private final OwnerRepository ownerRepository;
     private final TrainerRepository trainerRepository;

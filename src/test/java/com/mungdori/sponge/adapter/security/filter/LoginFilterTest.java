@@ -2,10 +2,10 @@ package com.mungdori.sponge.adapter.security.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mungdori.sponge.application.owner.provided.OwnerManager;
-import com.mungdori.sponge.application.token.provided.JWTManager;
+import com.mungdori.sponge.application.trainer.provided.TrainerManager;
 import com.mungdori.sponge.domain.owner.OwnerFixture;
+import com.mungdori.sponge.domain.trainer.TrainerFixture;
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,15 +22,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 @AutoConfigureMockMvc
 @Transactional
-record LoginFilterTest(MockMvcTester mvcTester, ObjectMapper objectMapper, OwnerManager ownerManager) {
+record LoginFilterTest(MockMvcTester mvcTester, ObjectMapper objectMapper, OwnerManager ownerManager,
+                       TrainerManager trainerManager) {
 
     @Test
     void ownerLogin() throws Exception {
-        ownerManager.register(OwnerFixture.createOwnerRegisterRequest());
+        var request = OwnerFixture.createOwnerRegisterRequest();
+        ownerManager.register(request);
 
         Map<String, String> loginRequest = Map.of(
-                "email", "mungdori999@gmail.com",
-                "password", "longsecret",
+                "email", request.email(),
+                "password", request.password(),
                 "loginType", "owner"
         );
 
@@ -48,11 +50,12 @@ record LoginFilterTest(MockMvcTester mvcTester, ObjectMapper objectMapper, Owner
 
     @Test
     void ownerLoginFail() throws Exception {
-        ownerManager.register(OwnerFixture.createOwnerRegisterRequest());
+        var request = OwnerFixture.createOwnerRegisterRequest();
+        ownerManager.register(request);
 
         Map<String, String> loginRequest = Map.of(
-                "email", "notfound@gmail.com",
-                "password", "longsecret",
+                "email", "notfound@naver.com",
+                "password", request.password(),
                 "loginType", "owner"
         );
 
@@ -64,5 +67,49 @@ record LoginFilterTest(MockMvcTester mvcTester, ObjectMapper objectMapper, Owner
                 .hasStatus(HttpStatus.UNAUTHORIZED);
 
     }
+
+    @Test
+    void trainerLogin() throws Exception {
+        var request = TrainerFixture.createTrainerRegisterRequest();
+        trainerManager.register(request);
+
+        Map<String, String> loginRequest = Map.of(
+                "email", request.email(),
+                "password", request.password(),
+                "loginType", "trainer"
+        );
+
+        MvcTestResult result = mvcTester.post().uri("/login").content(objectMapper.writeValueAsString(loginRequest))
+                .contentType(MediaType.APPLICATION_JSON)
+                .exchange();
+
+        assertThat(result)
+                .hasStatusOk()
+                .bodyJson()
+                .hasPathSatisfying("$.accessToken", notNull())
+                .hasPathSatisfying("$.refreshToken", notNull());
+
+    }
+
+    @Test
+    void trainerLoginFail() throws Exception {
+        var request = TrainerFixture.createTrainerRegisterRequest();
+        trainerManager.register(request);
+
+        Map<String, String> loginRequest = Map.of(
+                "email", request.email(),
+                "password", "wrongpassword",
+                "loginType", "trainer"
+        );
+
+        MvcTestResult result = mvcTester.post().uri("/login").content(objectMapper.writeValueAsString(loginRequest))
+                .contentType(MediaType.APPLICATION_JSON)
+                .exchange();
+
+        assertThat(result)
+                .hasStatus(HttpStatus.UNAUTHORIZED);
+
+    }
+
 
 }
