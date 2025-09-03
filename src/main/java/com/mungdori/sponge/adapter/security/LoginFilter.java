@@ -2,10 +2,11 @@ package com.mungdori.sponge.adapter.security;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationServiceException;
@@ -13,10 +14,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.util.StreamUtils;
-
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -39,8 +40,11 @@ public class LoginFilter extends AbstractAuthenticationProcessingFilter {
 
     private String loginTypeParameter = SPRING_SECURITY_FORM_LOGIN_TYPE_KEY;
 
-    public LoginFilter(AuthenticationManager authenticationManager) {
+    private final AuthenticationSuccessHandler authenticationSuccessHandler;
+
+    public LoginFilter(AuthenticationManager authenticationManager, AuthenticationSuccessHandler authenticationSuccessHandler) {
         super(DEFAULT_ANT_PATH_REQUEST_MATCHER, authenticationManager);
+        this.authenticationSuccessHandler = authenticationSuccessHandler;
     }
 
     @Override
@@ -78,6 +82,12 @@ public class LoginFilter extends AbstractAuthenticationProcessingFilter {
 
     protected void setDetails(HttpServletRequest request, UsernamePasswordAuthenticationToken authRequest) {
         authRequest.setDetails(this.authenticationDetailsSource.buildDetails(request));
+    }
+
+    @Override
+    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
+                                            Authentication authResult) throws IOException, ServletException {
+        authenticationSuccessHandler.onAuthenticationSuccess(request, response, authResult);
     }
 
 

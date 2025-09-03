@@ -4,7 +4,6 @@ import com.mungdori.sponge.domain.shared.Email;
 import com.mungdori.sponge.domain.trainer.Trainer;
 import org.springframework.data.repository.Repository;
 
-import java.nio.channels.FileChannel;
 import java.util.Optional;
 
 public interface TrainerRepository extends Repository<Trainer, Long> {

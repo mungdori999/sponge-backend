@@ -1,6 +1,7 @@
 package com.mungdori.sponge.domain.shared;
 
 import com.mungdori.sponge.domain.AbstractEntity;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -15,8 +16,10 @@ import java.time.LocalDateTime;
 @Entity
 public class Detail extends AbstractEntity {
 
+    @Column(name = "registered_at", updatable = false)
     private LocalDateTime registeredAt;
 
+    @Column(name = "deactivated_at")
     private LocalDateTime deactivatedAt;
 
 

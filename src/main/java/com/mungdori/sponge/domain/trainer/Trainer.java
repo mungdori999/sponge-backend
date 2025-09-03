@@ -12,11 +12,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.NaturalId;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.util.Objects.*;
+import static java.util.Objects.requireNonNull;
 import static org.springframework.util.Assert.state;
 
 @Getter

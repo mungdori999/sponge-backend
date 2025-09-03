@@ -3,7 +3,6 @@ package com.mungdori.sponge.adapter.security;
 import com.mungdori.sponge.application.owner.required.OwnerRepository;
 import com.mungdori.sponge.application.trainer.required.TrainerRepository;
 import com.mungdori.sponge.domain.shared.Email;
-import com.mungdori.sponge.utils.LoginType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -15,7 +14,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static com.mungdori.sponge.utils.LoginType.*;
+import static com.mungdori.sponge.adapter.security.utils.LoginType.OWNER;
+import static com.mungdori.sponge.adapter.security.utils.LoginType.TRAINER;
 
 @Component
 @RequiredArgsConstructor
