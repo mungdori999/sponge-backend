@@ -1,5 +1,6 @@
 package com.mungdori.sponge.application.trainer.required;
 
+import com.fasterxml.jackson.databind.introspect.AnnotationCollector;
 import com.mungdori.sponge.domain.shared.Email;
 import com.mungdori.sponge.domain.trainer.Trainer;
 import org.springframework.data.repository.Repository;
@@ -14,4 +15,5 @@ public interface TrainerRepository extends Repository<Trainer, Long> {
 
     Optional<Trainer> findById(Long trainerId);
 
+    Optional<Trainer> findByNickname(String nickname);
 }
