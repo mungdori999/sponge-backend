@@ -11,7 +11,6 @@ import com.mungdori.sponge.domain.trainer.Trainer;
 import com.mungdori.sponge.domain.trainer.TrainerRegisterRequest;
 import com.mungdori.sponge.domain.trainer.TrainerUpdateRequest;
 import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;

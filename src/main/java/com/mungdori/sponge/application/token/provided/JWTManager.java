@@ -6,4 +6,6 @@ public interface JWTManager {
 
 
     RefreshToken save (String email, String refreshToken);
+
+    void delete(String refresh);
 }

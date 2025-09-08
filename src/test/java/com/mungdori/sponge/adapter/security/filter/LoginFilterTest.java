@@ -36,7 +36,7 @@ record LoginFilterTest(MockMvcTester mvcTester, ObjectMapper objectMapper, Owner
                 "loginType", "owner"
         );
 
-        MvcTestResult result = mvcTester.post().uri("/login").content(objectMapper.writeValueAsString(loginRequest))
+        MvcTestResult result = mvcTester.post().uri("/api/login").content(objectMapper.writeValueAsString(loginRequest))
                 .contentType(MediaType.APPLICATION_JSON)
                 .exchange();
 
@@ -59,7 +59,7 @@ record LoginFilterTest(MockMvcTester mvcTester, ObjectMapper objectMapper, Owner
                 "loginType", "owner"
         );
 
-        MvcTestResult result = mvcTester.post().uri("/login").content(objectMapper.writeValueAsString(loginRequest))
+        MvcTestResult result = mvcTester.post().uri("/api/login").content(objectMapper.writeValueAsString(loginRequest))
                 .contentType(MediaType.APPLICATION_JSON)
                 .exchange();
 
@@ -79,7 +79,7 @@ record LoginFilterTest(MockMvcTester mvcTester, ObjectMapper objectMapper, Owner
                 "loginType", "trainer"
         );
 
-        MvcTestResult result = mvcTester.post().uri("/login").content(objectMapper.writeValueAsString(loginRequest))
+        MvcTestResult result = mvcTester.post().uri("/api/login").content(objectMapper.writeValueAsString(loginRequest))
                 .contentType(MediaType.APPLICATION_JSON)
                 .exchange();
 
@@ -102,7 +102,7 @@ record LoginFilterTest(MockMvcTester mvcTester, ObjectMapper objectMapper, Owner
                 "loginType", "trainer"
         );
 
-        MvcTestResult result = mvcTester.post().uri("/login").content(objectMapper.writeValueAsString(loginRequest))
+        MvcTestResult result = mvcTester.post().uri("/api/login").content(objectMapper.writeValueAsString(loginRequest))
                 .contentType(MediaType.APPLICATION_JSON)
                 .exchange();
 

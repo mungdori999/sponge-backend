@@ -24,4 +24,9 @@ public class JWTModifyService implements JWTManager {
 
         return token;
     }
+
+    @Override
+    public void delete(String refresh) {
+        refreshRepository.deleteByRefresh(refresh);
+    }
 }

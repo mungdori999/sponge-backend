@@ -25,10 +25,23 @@ public class TrainerFixture {
         return list;
     }
 
+    private static List<HistoryCreateRequest> createHistoryUpdateRequest() {
+        List<HistoryCreateRequest> list = new ArrayList<>();
+        list.add(new HistoryCreateRequest("title4", "201201", "202002", "description1"));
+        list.add(new HistoryCreateRequest("title5", "202003", "202105", "description2"));
+        return list;
+    }
+
+    public static TrainerUpdateRequest createTrainerUpdateRequest(String nickname) {
+
+        return new TrainerUpdateRequest(nickname, GenderType.MALE, "01011112222",  "new introduction", 1, createHistoryUpdateRequest());
+    }
+
     public static TrainerUpdateRequest createTrainerUpdateRequest() {
 
-        return new TrainerUpdateRequest("newnick", GenderType.MALE, "01011112222",  "new introduction", 1, createHistoryCreateRequest());
+        return createTrainerUpdateRequest("newnick");
     }
+
 
 
     public static PasswordEncoder createPasswordEncoder() {

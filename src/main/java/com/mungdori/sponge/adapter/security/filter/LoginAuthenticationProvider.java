@@ -17,7 +17,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static com.mungdori.sponge.adapter.security.utils.LoginType.*;
+import static com.mungdori.sponge.adapter.security.utils.LoginType.OWNER;
+import static com.mungdori.sponge.adapter.security.utils.LoginType.TRAINER;
 
 
 @Component

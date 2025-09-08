@@ -6,16 +6,14 @@ import com.mungdori.sponge.domain.owner.DuplicateNicknameException;
 import com.mungdori.sponge.domain.shared.UserStatus;
 import com.mungdori.sponge.domain.trainer.Trainer;
 import com.mungdori.sponge.domain.trainer.TrainerFixture;
-import com.mungdori.sponge.domain.trainer.TrainerUpdateRequest;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static com.mungdori.sponge.domain.owner.OwnerFixture.createPasswordEncoder;
-import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SpringBootTest
 @Transactional
@@ -56,6 +54,16 @@ record TrainerManagerTest(TrainerModifyService modifyService, EntityManager enti
 
         assertThat(trainer.getNickname()).isEqualTo(request.nickname());
         assertThat(trainer.getIntroduction()).isEqualTo(request.introduction());
+        assertThat(trainer.getHistoryList()).hasSize(request.historyCreateRequestList().size());
+    }
+
+    @Test
+    void updateInfoFail() {
+        Trainer trainer = createTrainer();
+
+        assertThatThrownBy(() -> modifyService.update(trainer.getId(),
+                TrainerFixture.createTrainerUpdateRequest("nickname")))
+                .isInstanceOf(DuplicateNicknameException.class);
     }
 
 
