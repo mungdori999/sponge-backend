@@ -1,8 +1,7 @@
 package com.mungdori.sponge.application.token;
 
 import com.mungdori.sponge.application.token.provided.JWTManager;
-import com.mungdori.sponge.application.token.required.RefreshRepository;
-import com.mungdori.sponge.domain.shared.Email;
+import com.mungdori.sponge.application.token.required.RefreshTokenRepository;
 import com.mungdori.sponge.domain.token.RefreshToken;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -13,20 +12,22 @@ import org.springframework.stereotype.Service;
 @Transactional
 public class JWTModifyService implements JWTManager {
 
-    private final RefreshRepository refreshRepository;
+    private final RefreshTokenRepository refreshTokenRepository;
 
 
     @Override
     public RefreshToken save(String email, String refreshToken) {
-        RefreshToken token = RefreshToken.create(new Email(email), refreshToken);
+        RefreshToken token = RefreshToken.create(refreshToken);
 
-        refreshRepository.save(token);
+        refreshTokenRepository.save(token);
 
         return token;
     }
 
     @Override
-    public void delete(String refresh) {
-        refreshRepository.deleteByRefresh(refresh);
+    public void delete(String refreshToken) {
+        RefreshToken foundToken = refreshTokenRepository.findByRefreshToken(refreshToken).orElseThrow();
+
+        refreshTokenRepository.delete(foundToken);
     }
 }

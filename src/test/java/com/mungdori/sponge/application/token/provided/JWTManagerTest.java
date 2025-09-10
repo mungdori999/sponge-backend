@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
@@ -20,7 +19,6 @@ record JWTManagerTest(JWTManager jwtManager, EntityManager entityManager) {
         entityManager.clear();
 
         assertThat(refreshToken.getId()).isNotNull();
-        assertThat(refreshToken.getCreatedDate()).isNotNull();
 
     }
 
@@ -30,7 +28,7 @@ record JWTManagerTest(JWTManager jwtManager, EntityManager entityManager) {
         entityManager.flush();
         entityManager.clear();
 
-        jwtManager.delete(refreshToken.getRefresh());
+        jwtManager.delete(refreshToken.getRefreshToken());
         entityManager.flush();
         entityManager.clear();
 

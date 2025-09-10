@@ -31,6 +31,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.springframework.boot:spring-boot-starter-security")
+	implementation("org.springframework.boot:spring-boot-starter-data-redis")
 	testImplementation("org.springframework.security:spring-security-test")
 
 	implementation("io.jsonwebtoken:jjwt-api:0.12.6")
@@ -52,6 +53,7 @@ dependencies {
 	testImplementation("com.tngtech.archunit:archunit-junit5:1.4.1")
 	testImplementation("org.mockito:mockito-core:5.18.0")
 	mockitoAgent("org.mockito:mockito-core:5.18.0") { isTransitive = false }
+
 }
 
 tasks.withType<Test> {

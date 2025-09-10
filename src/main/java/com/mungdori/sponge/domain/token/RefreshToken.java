@@ -1,37 +1,24 @@
 package com.mungdori.sponge.domain.token;
 
-import com.mungdori.sponge.domain.AbstractEntity;
-import com.mungdori.sponge.domain.shared.Email;
-import jakarta.persistence.Column;
-import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
-import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.redis.core.RedisHash;
 
-import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Getter
-@Entity
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class RefreshToken extends AbstractEntity {
+@RedisHash(value = "refreshToken", timeToLive = 2592000)
+public class RefreshToken {
 
-    @Column(name = "email", nullable = false)
-    @Embedded
-    private Email email;
+    @Id
+    private String refreshToken;
+    private Long id;
 
-    @Column(name = "refresh", nullable = false, length = 512)
-    private String refresh;
-
-    @Column(name = "created_date", updatable = false)
-    private LocalDateTime createdDate;
-
-    public static RefreshToken create(Email email, String refresh) {
+    public static RefreshToken create(String token) {
         RefreshToken refreshToken = new RefreshToken();
 
-        refreshToken.email = email;
-        refreshToken.refresh = refresh;
-        refreshToken.createdDate = LocalDateTime.now();
+        refreshToken.refreshToken = token;
+        refreshToken.id = UUID.randomUUID().getMostSignificantBits();
 
         return refreshToken;
     }

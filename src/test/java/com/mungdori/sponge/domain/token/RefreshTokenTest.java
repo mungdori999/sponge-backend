@@ -1,6 +1,5 @@
 package com.mungdori.sponge.domain.token;
 
-import com.mungdori.sponge.domain.shared.Email;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -9,10 +8,10 @@ class RefreshTokenTest {
 
     @Test
     void create() {
-        RefreshToken token = RefreshToken.create(new Email("mungdori999@gmail.com"), "refreshToken");
+        RefreshToken token = RefreshToken.create("refreshToken");
 
-        assertThat(token.getEmail().address()).isNotNull();
-        assertThat(token.getCreatedDate()).isNotNull();
+        assertThat(token.getId()).isNotNull();
+        assertThat(token.getRefreshToken()).isEqualTo("refreshToken");
     }
 
 }
