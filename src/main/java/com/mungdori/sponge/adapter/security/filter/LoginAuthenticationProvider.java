@@ -46,13 +46,13 @@ public class LoginAuthenticationProvider implements AuthenticationProvider {
 
         if (OWNER.name().equalsIgnoreCase(loginType)) {
             userDetails = ownerRepository.findByEmail(new Email(email))
-                    .map(owner -> new UserDetailsImpl(owner.getEmail().address(), owner.getPasswordHash(),
+                    .map(owner -> new UserDetailsImpl(owner.getEmail().address(), owner.getNickname(),owner.getPasswordHash(),
                             List.of(new SimpleGrantedAuthority(OWNER.name()))))
                     .orElseThrow(() -> new BadCredentialsException("Owner not found"));
 
         } else if (TRAINER.name().equalsIgnoreCase(loginType)) {
             userDetails = trainerRepository.findByEmail(new Email(email))
-                    .map(trainer -> new UserDetailsImpl(trainer.getEmail().address(), trainer.getPasswordHash(),
+                    .map(trainer -> new UserDetailsImpl(trainer.getEmail().address(), trainer.getNickname(),trainer.getPasswordHash(),
                             List.of(new SimpleGrantedAuthority(TRAINER.name()))))
                     .orElseThrow(() -> new BadCredentialsException("Trainer not found"));
         } else {

@@ -56,14 +56,16 @@ public class JWTUtil {
     }
 
     // JWT(Access/Refresh) 생성
-    public static String createJWT(String email, String loginType, Boolean isAccess) {
+    public static String createJWT(String email, String nickname,String loginType, Boolean isAccess) {
 
         long now = System.currentTimeMillis();
         long expiry = isAccess ? accessTokenExpiresIn : refreshTokenExpiresIn;
         String type = isAccess ? "access" : "refresh";
 
         return Jwts.builder()
+
                 .claim("email", email)
+                .claim("nickname", nickname)
                 .claim("loginType", loginType)
                 .claim("type", type)
                 .issuedAt(new Date(now))

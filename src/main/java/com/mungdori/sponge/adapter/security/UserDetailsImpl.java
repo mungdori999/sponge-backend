@@ -8,14 +8,17 @@ import java.util.Collection;
 public class UserDetailsImpl implements UserDetails {
 
     private final String email;
+    private final String nickname;
     private final String passwordHash;
     private final Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetailsImpl(String email, String passwordHash, Collection<? extends GrantedAuthority> authorities) {
+    public UserDetailsImpl(String email, String nickname, String passwordHash, Collection<? extends GrantedAuthority> authorities) {
         this.email = email;
+        this.nickname = nickname;
         this.passwordHash = passwordHash;
         this.authorities = authorities;
     }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -27,28 +30,12 @@ public class UserDetailsImpl implements UserDetails {
         return passwordHash;
     }
 
-    @Override
-    public String getUsername() {
+    public String getEmail() {
         return email;
     }
 
     @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
+    public String getUsername() {
+        return nickname;
     }
 }
