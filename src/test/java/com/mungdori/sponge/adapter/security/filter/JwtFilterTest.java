@@ -1,7 +1,7 @@
 package com.mungdori.sponge.adapter.security.filter;
 
 
-import com.mungdori.sponge.adapter.jwt.JWTUtil;
+import com.mungdori.sponge.adapter.security.utils.JWTUtil;
 import com.mungdori.sponge.adapter.security.utils.LoginType;
 import jakarta.servlet.ServletException;
 import org.junit.jupiter.api.BeforeEach;

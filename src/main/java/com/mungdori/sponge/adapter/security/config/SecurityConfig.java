@@ -79,7 +79,7 @@ public class SecurityConfig {
         // 인가
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/owner", "/api/pet").permitAll()
+                        .requestMatchers("/api/owner").permitAll()
                         .anyRequest().authenticated());
 
         http

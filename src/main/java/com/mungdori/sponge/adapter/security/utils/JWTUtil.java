@@ -1,4 +1,4 @@
-package com.mungdori.sponge.adapter.jwt;
+package com.mungdori.sponge.adapter.security.utils;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;

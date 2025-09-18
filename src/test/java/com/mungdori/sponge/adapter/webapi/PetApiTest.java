@@ -78,6 +78,7 @@ class PetApiTest {
     }
 
     @Test
+    @WithMockUser(username = "test@mail.com", roles = {"OWNER"})
     void registerValidFail() throws JsonProcessingException {
         PetRegisterRequest request = PetFixture.createPetRegisterRequest("바");
         String requestJson = objectMapper.writeValueAsString(request);
