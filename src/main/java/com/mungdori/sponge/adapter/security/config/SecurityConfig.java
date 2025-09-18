@@ -1,5 +1,6 @@
 package com.mungdori.sponge.adapter.security.config;
 
+import com.mungdori.sponge.adapter.security.filter.JwtFilter;
 import com.mungdori.sponge.adapter.security.filter.LoginFilter;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,6 +15,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -74,10 +76,12 @@ public class SecurityConfig {
         // 인가
         http
                 .authorizeHttpRequests(auth -> auth
-                        .anyRequest().permitAll());
-        http
+                        .requestMatchers("/api/owner", "/api/pet").permitAll()
+                        .anyRequest().authenticated());
 
-                .addFilterBefore(new LoginFilter(authenticationManager(authenticationConfiguration), loginSuccessHandler), UsernamePasswordAuthenticationFilter.class);
+        http
+                .addFilterBefore(new LoginFilter(authenticationManager(authenticationConfiguration), loginSuccessHandler), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JwtFilter(), LogoutFilter.class);
 
         http
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()));

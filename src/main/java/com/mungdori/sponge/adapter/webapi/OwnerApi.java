@@ -1,7 +1,7 @@
 package com.mungdori.sponge.adapter.webapi;
 
-import com.mungdori.sponge.adapter.webapi.dto.OwnerInfoUpdateResponse;
-import com.mungdori.sponge.adapter.webapi.dto.OwnerRegisterResponse;
+import com.mungdori.sponge.adapter.webapi.dto.owner.OwnerInfoUpdateResponse;
+import com.mungdori.sponge.adapter.webapi.dto.owner.OwnerRegisterResponse;
 import com.mungdori.sponge.application.owner.provided.OwnerManager;
 import com.mungdori.sponge.domain.owner.Owner;
 import com.mungdori.sponge.domain.owner.OwnerInfoUpdateRequest;

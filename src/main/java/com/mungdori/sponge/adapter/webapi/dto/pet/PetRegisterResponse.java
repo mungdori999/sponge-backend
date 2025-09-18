@@ -1,4 +1,4 @@
-package com.mungdori.sponge.adapter.webapi.dto;
+package com.mungdori.sponge.adapter.webapi.dto.pet;
 
 
 import com.mungdori.sponge.domain.pet.Pet;

@@ -1,4 +1,4 @@
-package com.mungdori.sponge.adapter.webapi.dto;
+package com.mungdori.sponge.adapter.webapi.dto.owner;
 
 import com.mungdori.sponge.domain.owner.Owner;
 import com.mungdori.sponge.domain.shared.GenderType;

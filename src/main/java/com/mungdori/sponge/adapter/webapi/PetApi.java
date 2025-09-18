@@ -1,7 +1,7 @@
 package com.mungdori.sponge.adapter.webapi;
 
-import com.mungdori.sponge.adapter.webapi.dto.PetInfoUpdateResponse;
-import com.mungdori.sponge.adapter.webapi.dto.PetRegisterResponse;
+import com.mungdori.sponge.adapter.webapi.dto.pet.PetInfoUpdateResponse;
+import com.mungdori.sponge.adapter.webapi.dto.pet.PetRegisterResponse;
 import com.mungdori.sponge.application.pet.provided.PetManager;
 import com.mungdori.sponge.domain.pet.Pet;
 import com.mungdori.sponge.domain.pet.PetInfoUpdateRequest;
