@@ -29,11 +29,14 @@ public class SecurityConfig {
 
     private final AuthenticationConfiguration authenticationConfiguration;
     private final AuthenticationSuccessHandler loginSuccessHandler;
+    private final JwtFilter jwtFilter;
+
 
     public SecurityConfig(AuthenticationConfiguration authenticationConfiguration,
-                          @Qualifier("LoginSuccessHandler") AuthenticationSuccessHandler loginSuccessHandler) {
+                          @Qualifier("LoginSuccessHandler") AuthenticationSuccessHandler loginSuccessHandler, JwtFilter jwtFilter) {
         this.authenticationConfiguration = authenticationConfiguration;
         this.loginSuccessHandler = loginSuccessHandler;
+        this.jwtFilter = jwtFilter;
     }
 
     @Bean
@@ -81,7 +84,7 @@ public class SecurityConfig {
 
         http
                 .addFilterBefore(new LoginFilter(authenticationManager(authenticationConfiguration), loginSuccessHandler), UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(new JwtFilter(), LogoutFilter.class);
+                .addFilterBefore(jwtFilter, LogoutFilter.class);
 
         http
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()));
