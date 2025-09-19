@@ -3,8 +3,8 @@ package com.mungdori.sponge.domain.post;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static com.mungdori.sponge.domain.post.PostFixture.*;
-import static org.assertj.core.api.Assertions.*;
+import static com.mungdori.sponge.domain.post.PostFixture.createPostCreateRequest;
+import static com.mungdori.sponge.domain.post.PostFixture.createPostInfoRequest;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PostTest {
@@ -19,6 +19,8 @@ class PostTest {
     @Test
     void create() {
         assertThat(post.getTitle()).isNotNull();
+        assertThat(post.getCategoryList()).hasSizeGreaterThan(1);
+        assertThat(post.getTagList()).hasSizeGreaterThan(1);
         assertThat(post.getCreatedAt()).isNotNull();
     }
 
@@ -28,8 +30,11 @@ class PostTest {
         Post update = post.update(request);
 
         assertThat(update.getTitle()).isEqualTo(request.title());
+        assertThat(update.getCategoryList()).hasSizeGreaterThan(1);
+        assertThat(update.getTagList()).hasSizeGreaterThan(1);
         assertThat(update.getUpdatedAt()).isNotNull();
     }
+
 
 
 }

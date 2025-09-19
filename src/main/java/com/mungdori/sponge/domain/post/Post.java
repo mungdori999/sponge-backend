@@ -1,13 +1,14 @@
 package com.mungdori.sponge.domain.post;
 
 import com.mungdori.sponge.domain.AbstractEntity;
-import com.mungdori.sponge.domain.pet.Pet;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import static java.util.Objects.*;
 
@@ -38,6 +39,15 @@ public class Post extends AbstractEntity {
     @Column(name = "pet_id")
     private Long petId;
 
+    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PostCategory> categoryList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PostTag> tagList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PostFile> fileList = new ArrayList<>();
+
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
@@ -57,6 +67,18 @@ public class Post extends AbstractEntity {
         post.ownerId = ownerId;
         post.petId = petId;
 
+        createRequest.categoryCodeList().forEach((categoryCode) -> {
+            post.categoryList.add(PostCategory.create(categoryCode, post));
+        });
+
+        createRequest.hashTagList().forEach((hashTag) -> {
+            post.tagList.add(PostTag.create(hashTag, post));
+        });
+
+        createRequest.fileUrlList().forEach((fileUrl) -> {
+            post.fileList.add(PostFile.create(fileUrl, post));
+        });
+
         post.createdAt = LocalDateTime.now();
         return post;
 
@@ -67,8 +89,25 @@ public class Post extends AbstractEntity {
         this.content = requireNonNull(updateRequest.content());
         this.duration = requireNonNull(updateRequest.duration());
 
+        categoryList.clear();
+        tagList.clear();
+        fileList.clear();
+
+        updateRequest.categoryCodeList().forEach((categoryCode) -> {
+            this.categoryList.add(PostCategory.create(categoryCode, this));
+        });
+
+        updateRequest.hashTagList().forEach((hashTag) -> {
+            this.tagList.add(PostTag.create(hashTag, this));
+        });
+
+        updateRequest.fileUrlList().forEach((fileUrl) -> {
+            this.fileList.add(PostFile.create(fileUrl, this));
+        });
+
         this.updatedAt = LocalDateTime.now();
 
         return this;
     }
+
 }
