@@ -25,7 +25,7 @@ public class PetModifyService implements PetManager {
 
     @Override
     public Pet register(PetRegisterRequest registerRequest, Long ownerId) {
-        Owner owner = ownerFinder.find(ownerId);
+        Owner owner = ownerFinder.findById(ownerId);
 
         Pet pet = Pet.register(registerRequest, owner.getId());
 

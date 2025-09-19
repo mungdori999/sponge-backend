@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 
 import static com.mungdori.sponge.domain.post.PostFixture.createPostCreateRequest;
 import static com.mungdori.sponge.domain.post.PostFixture.createPostInfoRequest;
-import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PostTest {

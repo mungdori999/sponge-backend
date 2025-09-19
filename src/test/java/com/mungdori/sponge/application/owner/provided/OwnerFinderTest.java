@@ -16,20 +16,32 @@ record OwnerFinderTest(OwnerFinder ownerFinder, OwnerManager ownerManager, Entit
 
 
     @Test
-    void ownerFind() {
+    void ownerFindById() {
         Owner owner = ownerManager.register(createOwnerRegisterRequest());
 
         entityManager.flush();
         entityManager.clear();
 
-        Owner found = ownerFinder.find(owner.getId());
+        Owner found = ownerFinder.findById(owner.getId());
         assertThat(found.getId()).isEqualTo(owner.getId());
 
     }
 
     @Test
-    void ownerFindFail() {
-        Assertions.assertThatThrownBy(()-> ownerFinder.find(999L))
+    void ownerFindByEmail() {
+        Owner owner = ownerManager.register(createOwnerRegisterRequest());
+
+        entityManager.flush();
+        entityManager.clear();
+
+        Owner found = ownerFinder.findByEmail(owner.getEmail().address());
+        assertThat(found.getId()).isEqualTo(owner.getId());
+
+    }
+
+    @Test
+    void ownerFindByIdFail() {
+        Assertions.assertThatThrownBy(()-> ownerFinder.findById(999L))
             .isInstanceOf(IllegalArgumentException.class);
     }
 

@@ -36,7 +36,7 @@ public class OwnerModifyService implements OwnerManager {
 
     @Override
     public Owner update(Long ownerId, OwnerInfoUpdateRequest updateRequest) {
-        Owner owner = ownerFinder.find(ownerId);
+        Owner owner = ownerFinder.findById(ownerId);
 
         checkDuplicateNickname(updateRequest.nickname());
 

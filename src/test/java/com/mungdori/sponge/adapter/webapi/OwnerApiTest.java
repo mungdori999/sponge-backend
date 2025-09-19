@@ -35,6 +35,35 @@ class OwnerApiTest {
     final OwnerManager ownerManager;
 
     @Test
+    void findOwner()  {
+        Owner owner = ownerManager.register(OwnerFixture.createOwnerRegisterRequest());
+
+        MvcTestResult result = mvcTester.get().uri("/api/owner/{id}", owner.getId())
+                .exchange();
+
+        assertThat(result)
+                .hasStatusOk()
+                .bodyJson()
+                .hasPathSatisfying("$.ownerId", notNull())
+                .hasPathSatisfying("$.nickname", equalsTo(owner));
+    }
+
+    @Test
+    @WithMockUser(username = "test@mail.com", roles = {"OWNER"})
+    void findMyInfo()  {
+        Owner owner = ownerManager.register(OwnerFixture.createOwnerRegisterRequest());
+
+        MvcTestResult result = mvcTester.get().uri("/api/owner")
+                .exchange();
+
+        assertThat(result)
+                .hasStatusOk()
+                .bodyJson()
+                .hasPathSatisfying("$.ownerId", notNull())
+                .hasPathSatisfying("$.nickname", equalsTo(owner));
+    }
+
+    @Test
     void register() throws JsonProcessingException {
         OwnerRegisterRequest request = OwnerFixture.createOwnerRegisterRequest();
         String requestJson = objectMapper.writeValueAsString(request);

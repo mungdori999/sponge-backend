@@ -1,5 +1,6 @@
 package com.mungdori.sponge;
 
+import com.mungdori.sponge.domain.owner.Owner;
 import com.mungdori.sponge.domain.owner.OwnerInfoUpdateRequest;
 import com.mungdori.sponge.domain.owner.OwnerRegisterRequest;
 import com.mungdori.sponge.domain.pet.PetInfoUpdateRequest;
@@ -21,8 +22,10 @@ public class AssertThatUtils {
     public static Consumer<AssertProvider<JsonPathValueAssert>> equalsTo(OwnerInfoUpdateRequest request) {
         return value -> assertThat(value).isEqualTo(request.nickname());
     }
-
     public static Consumer<AssertProvider<JsonPathValueAssert>> equalsTo(PetInfoUpdateRequest request) {
         return value -> assertThat(value).isEqualTo(request.name());
+    }
+    public static Consumer<AssertProvider<JsonPathValueAssert>> equalsTo(Owner request) {
+        return value -> assertThat(value).isEqualTo(request.getNickname());
     }
 }
