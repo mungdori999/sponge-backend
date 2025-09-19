@@ -29,7 +29,7 @@ record PetFinderTest(PetFinder petFinder, PetManager petManager, EntityManager e
 
         assertThat(found.getId()).isEqualTo(pet.getId());
         assertThat(found.getName()).isEqualTo(pet.getName());
-        assertThat(found.getOwner().getId()).isEqualTo(owner.getId());
+        assertThat(found.getOwnerId()).isEqualTo(owner.getId());
     }
 
     @Test

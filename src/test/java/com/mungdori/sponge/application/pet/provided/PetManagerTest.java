@@ -27,7 +27,7 @@ record PetManagerTest(PetModifyService modifyService, EntityManager entityManage
 
         assertThat(pet.getId()).isNotNull();
         assertThat(pet.getWeight()).isGreaterThan(0);
-        assertThat(pet.getOwner().getId()).isEqualTo(owner.getId());
+        assertThat(pet.getOwnerId()).isEqualTo(owner.getId());
 
     }
 

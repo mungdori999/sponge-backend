@@ -17,7 +17,7 @@ record PetRepositoryTest(PetRepository petRepository, EntityManager entityManage
     @Test
     void createPet() {
         Owner owner = createOwner();
-        Pet pet = Pet.register(createPetRegisterRequest(), owner);
+        Pet pet = Pet.register(createPetRegisterRequest(), owner.getId());
 
         assertThat(pet.getId()).isNull();
 

@@ -27,7 +27,7 @@ public class PetModifyService implements PetManager {
     public Pet register(PetRegisterRequest registerRequest, Long ownerId) {
         Owner owner = ownerFinder.find(ownerId);
 
-        Pet pet = Pet.register(registerRequest, owner);
+        Pet pet = Pet.register(registerRequest, owner.getId());
 
         pet = petRepository.save(pet);
 

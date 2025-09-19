@@ -31,12 +31,11 @@ public class Pet extends AbstractEntity {
     @Column(name = "weight", nullable = false)
     private float weight;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "owner_id")
-    private Owner owner;
+    @Column(name = "owner_id")
+    private Long ownerId;
 
 
-    public static Pet register(PetRegisterRequest registerRequest, Owner owner) {
+    public static Pet register(PetRegisterRequest registerRequest, Long ownerId) {
         Pet pet = new Pet();
 
         pet.name = requireNonNull(registerRequest.name());
@@ -44,7 +43,7 @@ public class Pet extends AbstractEntity {
         pet.gender = requireNonNull(registerRequest.gender());
         pet.age = registerRequest.age();
         pet.weight = registerRequest.weight();
-        pet.owner = owner;
+        pet.ownerId = ownerId;
 
         return pet;
     }

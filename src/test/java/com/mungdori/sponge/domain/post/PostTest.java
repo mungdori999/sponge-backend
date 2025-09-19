@@ -1,5 +1,6 @@
 package com.mungdori.sponge.domain.post;
 
+import com.mungdori.sponge.domain.pet.Pet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +13,7 @@ class PostTest {
 
     @BeforeEach
     void setUp() {
-        post = Post.create(createPostRequest());
+        post = Post.create(createPostRequest(), 1L, 1L);
     }
 
     @Test

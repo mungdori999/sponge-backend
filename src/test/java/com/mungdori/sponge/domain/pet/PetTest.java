@@ -17,7 +17,7 @@ class PetTest {
     @BeforeEach
     void setUp() {
         Owner owner = Owner.register(createOwnerRegisterRequest(), createPasswordEncoder());
-        pet = Pet.register(createPetRegisterRequest(), owner);
+        pet = Pet.register(createPetRegisterRequest(), owner.getId());
     }
 
     @Test

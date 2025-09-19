@@ -8,7 +8,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 import static java.util.Objects.*;
 
@@ -17,13 +16,12 @@ import static java.util.Objects.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Post extends AbstractEntity {
 
-    @Column(name = "title", nullable = false, length = 255)
+    @Column(name = "title", nullable = false)
     private String title;
 
     @Lob
     @Column(name = "content", nullable = false)
     private String content;
-
 
     @Column(name = "duration", nullable = false, length = 150)
     private String duration;
@@ -34,9 +32,11 @@ public class Post extends AbstractEntity {
     @Column(name = "answer_count")
     private int answerCount = 0;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "pet_id")
-    private Pet pet;
+    @Column(name = "owner_id")
+    private Long ownerId;
+
+    @Column(name = "pet_id")
+    private Long petId;
 
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
@@ -47,12 +47,15 @@ public class Post extends AbstractEntity {
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
-    public static Post create(PostCreateRequest createRequest) {
+    public static Post create(PostCreateRequest createRequest, Long ownerId , Long petId) {
         Post post = new Post();
 
         post.title = requireNonNull(createRequest.title());
         post.content = requireNonNull(createRequest.content());
         post.duration = requireNonNull(createRequest.duration());
+
+        post.ownerId = ownerId;
+        post.petId = petId;
 
         post.createdAt = LocalDateTime.now();
         return post;
