@@ -1,10 +1,10 @@
 package com.mungdori.sponge.domain.post;
 
-import com.mungdori.sponge.domain.pet.Pet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static com.mungdori.sponge.domain.post.PostFixture.*;
+import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PostTest {
@@ -13,7 +13,7 @@ class PostTest {
 
     @BeforeEach
     void setUp() {
-        post = Post.create(createPostRequest(), 1L, 1L);
+        post = Post.create(createPostCreateRequest(), 1L, 1L);
     }
 
     @Test
@@ -21,4 +21,15 @@ class PostTest {
         assertThat(post.getTitle()).isNotNull();
         assertThat(post.getCreatedAt()).isNotNull();
     }
+
+    @Test
+    void update() {
+        var request = createPostInfoRequest();
+        Post update = post.update(request);
+
+        assertThat(update.getTitle()).isEqualTo(request.title());
+        assertThat(update.getUpdatedAt()).isNotNull();
+    }
+
+
 }

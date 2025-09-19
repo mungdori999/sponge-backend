@@ -43,6 +43,7 @@ public class Pet extends AbstractEntity {
         pet.gender = requireNonNull(registerRequest.gender());
         pet.age = registerRequest.age();
         pet.weight = registerRequest.weight();
+
         pet.ownerId = ownerId;
 
         return pet;

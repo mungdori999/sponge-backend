@@ -47,7 +47,7 @@ public class Post extends AbstractEntity {
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
-    public static Post create(PostCreateRequest createRequest, Long ownerId , Long petId) {
+    public static Post create(PostCreateRequest createRequest, Long ownerId, Long petId) {
         Post post = new Post();
 
         post.title = requireNonNull(createRequest.title());
@@ -60,5 +60,15 @@ public class Post extends AbstractEntity {
         post.createdAt = LocalDateTime.now();
         return post;
 
+    }
+
+    public Post update(PostInfoUpdateRequest updateRequest) {
+        this.title = requireNonNull(updateRequest.title());
+        this.content = requireNonNull(updateRequest.content());
+        this.duration = requireNonNull(updateRequest.duration());
+
+        this.updatedAt = LocalDateTime.now();
+
+        return this;
     }
 }
