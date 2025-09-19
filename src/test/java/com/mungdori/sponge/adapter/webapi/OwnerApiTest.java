@@ -2,6 +2,7 @@ package com.mungdori.sponge.adapter.webapi;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mungdori.sponge.adapter.security.config.WithMockOwner;
 import com.mungdori.sponge.application.owner.provided.OwnerManager;
 import com.mungdori.sponge.domain.owner.Owner;
 import com.mungdori.sponge.domain.owner.OwnerFixture;
@@ -14,7 +15,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.assertj.MockMvcTester;
 import org.springframework.test.web.servlet.assertj.MvcTestResult;
 
@@ -49,9 +49,9 @@ class OwnerApiTest {
     }
 
     @Test
-    @WithMockUser(username = "test@mail.com", roles = {"OWNER"})
+    @WithMockOwner
     void findMyInfo()  {
-        Owner owner = ownerManager.register(OwnerFixture.createOwnerRegisterRequest());
+        Owner owner = ownerManager.register(OwnerFixture.createOwnerRegisterRequest("test@mail.com","nickname"));
 
         MvcTestResult result = mvcTester.get().uri("/api/owner")
                 .exchange();
@@ -79,7 +79,7 @@ class OwnerApiTest {
     }
 
     @Test
-    @WithMockUser(username = "test@mail.com", roles = {"OWNER"})
+    @WithMockOwner
     void update() throws JsonProcessingException {
         Owner owner = ownerManager.register(OwnerFixture.createOwnerRegisterRequest());
 
