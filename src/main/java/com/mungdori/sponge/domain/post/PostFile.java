@@ -7,7 +7,6 @@ import lombok.*;
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@EqualsAndHashCode(callSuper = true)
 public class PostFile extends AbstractEntity {
 
     @Column(name = "file_url",nullable = false)

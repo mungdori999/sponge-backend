@@ -13,7 +13,7 @@ class PostTest {
 
     @BeforeEach
     void setUp() {
-        post = Post.create(createPostCreateRequest(), 1L, 1L);
+        post = Post.create(createPostCreateRequest(), 1L);
     }
 
     @Test
@@ -36,7 +36,6 @@ class PostTest {
         assertThat(update.getFileList()).hasSizeGreaterThan(1);
         assertThat(update.getUpdatedAt()).isNotNull();
     }
-
 
 
 }

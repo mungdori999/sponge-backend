@@ -33,9 +33,6 @@ public class Post extends AbstractEntity {
     @Column(name = "answer_count")
     private int answerCount = 0;
 
-    @Column(name = "owner_id")
-    private Long ownerId;
-
     @Column(name = "pet_id")
     private Long petId;
 
@@ -57,14 +54,13 @@ public class Post extends AbstractEntity {
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
-    public static Post create(PostCreateRequest createRequest, Long ownerId, Long petId) {
+    public static Post create(PostCreateRequest createRequest, Long petId) {
         Post post = new Post();
 
         post.title = requireNonNull(createRequest.title());
         post.content = requireNonNull(createRequest.content());
         post.duration = requireNonNull(createRequest.duration());
 
-        post.ownerId = ownerId;
         post.petId = petId;
 
         createRequest.categoryCodeList().forEach((categoryCode) -> {

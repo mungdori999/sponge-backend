@@ -12,7 +12,7 @@ class PostCategoryTest {
 
     @BeforeEach
     void setUp() {
-        post = Post.create(createPostCreateRequest(), 1L, 1L);
+        post = Post.create(createPostCreateRequest(), 1L);
     }
 
     @Test

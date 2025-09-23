@@ -13,7 +13,7 @@ record PostRepositoryTest(PostRepository postRepository, EntityManager entityMan
 
     @Test
     void createPost() {
-        Post post = Post.create(PostFixture.createPostCreateRequest(), 1L, 1L);
+        Post post = Post.create(PostFixture.createPostCreateRequest(), 1L);
 
         assertThat(post.getId()).isNull();
 
