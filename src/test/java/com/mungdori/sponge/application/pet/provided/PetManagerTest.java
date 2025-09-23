@@ -1,6 +1,5 @@
 package com.mungdori.sponge.application.pet.provided;
 
-import com.mungdori.sponge.application.pet.PetModifyService;
 import com.mungdori.sponge.domain.owner.Owner;
 import com.mungdori.sponge.domain.pet.Pet;
 import jakarta.persistence.EntityManager;
@@ -16,14 +15,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @Transactional
-record PetManagerTest(PetModifyService modifyService, EntityManager entityManager)  {
+record PetManagerTest(PetManager petManager, EntityManager entityManager)  {
 
 
     @Test
     void register() {
         Owner owner = createOwner();
 
-        Pet pet = modifyService.register(createPetRegisterRequest(), owner.getId());
+        Pet pet = petManager.register(createPetRegisterRequest(), owner.getId());
 
         assertThat(pet.getId()).isNotNull();
         assertThat(pet.getWeight()).isGreaterThan(0);
@@ -35,12 +34,12 @@ record PetManagerTest(PetModifyService modifyService, EntityManager entityManage
     void update() {
         Owner owner = createOwner();
 
-        Pet pet = modifyService.register(createPetRegisterRequest(), owner.getId());
+        Pet pet = petManager.register(createPetRegisterRequest(), owner.getId());
         entityManager.flush();
         entityManager.clear();
 
         var request = createPetInfoUpdateRequest();
-        pet = modifyService.update(pet.getId(),request);
+        pet = petManager.update(pet.getId(),request);
 
         assertThat(pet.getId()).isNotNull();
         assertThat(pet.getName()).isEqualTo(request.name());

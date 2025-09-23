@@ -1,6 +1,5 @@
 package com.mungdori.sponge.application.trainer.provided;
 
-import com.mungdori.sponge.application.trainer.TrainerModifyService;
 import com.mungdori.sponge.domain.owner.DuplicateEmailException;
 import com.mungdori.sponge.domain.owner.DuplicateNicknameException;
 import com.mungdori.sponge.domain.shared.UserStatus;
@@ -17,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SpringBootTest
 @Transactional
-record TrainerManagerTest(TrainerModifyService modifyService, EntityManager entityManager) {
+record TrainerManagerTest(TrainerManager trainerManager, EntityManager entityManager) {
 
 
     @Test
@@ -32,7 +31,7 @@ record TrainerManagerTest(TrainerModifyService modifyService, EntityManager enti
     void duplicateNickname() {
         createTrainer();
 
-        assertThatThrownBy(() -> modifyService.register(TrainerFixture.createTrainerRegisterRequest("new@naver.com", "nickname")))
+        assertThatThrownBy(() -> trainerManager.register(TrainerFixture.createTrainerRegisterRequest("new@naver.com", "nickname")))
                 .isInstanceOf(DuplicateNicknameException.class);
     }
 
@@ -40,7 +39,7 @@ record TrainerManagerTest(TrainerModifyService modifyService, EntityManager enti
     void duplicateEmail() {
         createTrainer();
 
-        assertThatThrownBy(() -> modifyService.register(TrainerFixture.createTrainerRegisterRequest("mungdori999@gmail.com", "newname")))
+        assertThatThrownBy(() -> trainerManager.register(TrainerFixture.createTrainerRegisterRequest("mungdori999@gmail.com", "newname")))
                 .isInstanceOf(DuplicateEmailException.class);
     }
 
@@ -50,7 +49,7 @@ record TrainerManagerTest(TrainerModifyService modifyService, EntityManager enti
 
         var request = TrainerFixture.createTrainerUpdateRequest();
 
-        trainer = modifyService.update(trainer.getId(), request);
+        trainer = trainerManager.update(trainer.getId(), request);
 
         assertThat(trainer.getNickname()).isEqualTo(request.nickname());
         assertThat(trainer.getIntroduction()).isEqualTo(request.introduction());
@@ -61,7 +60,7 @@ record TrainerManagerTest(TrainerModifyService modifyService, EntityManager enti
     void updateInfoFail() {
         Trainer trainer = createTrainer();
 
-        assertThatThrownBy(() -> modifyService.update(trainer.getId(),
+        assertThatThrownBy(() -> trainerManager.update(trainer.getId(),
                 TrainerFixture.createTrainerUpdateRequest("nickname")))
                 .isInstanceOf(DuplicateNicknameException.class);
     }
