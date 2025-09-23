@@ -35,13 +35,23 @@ public class PetModifyService implements PetManager {
     }
 
     @Override
-    public Pet update(Long petId, PetInfoUpdateRequest updateRequest) {
+    public Pet update(Long petId, PetInfoUpdateRequest updateRequest, String email) {
         Pet pet = petFinder.find(petId);
+
+        Owner owner = ownerFinder.findByEmail(email);
+
+        checkValidMyAccount(pet, owner);
 
         pet.updateInfo(updateRequest);
 
         pet = petRepository.save(pet);
 
         return pet;
+    }
+
+    private static void checkValidMyAccount(Pet pet, Owner owner) {
+        if(!pet.getOwnerId().equals(owner.getId())) {
+            throw new IllegalArgumentException("소유한 반려견이 아닙니다!");
+        }
     }
 }

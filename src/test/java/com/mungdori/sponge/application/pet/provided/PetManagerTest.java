@@ -39,7 +39,7 @@ record PetManagerTest(PetManager petManager, EntityManager entityManager)  {
         entityManager.clear();
 
         var request = createPetInfoUpdateRequest();
-        pet = petManager.update(pet.getId(),request);
+        pet = petManager.update(pet.getId(),request,owner.getEmail().address());
 
         assertThat(pet.getId()).isNotNull();
         assertThat(pet.getName()).isEqualTo(request.name());

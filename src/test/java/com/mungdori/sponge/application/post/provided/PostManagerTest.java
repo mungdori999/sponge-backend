@@ -51,6 +51,18 @@ record PostManagerTest(PostManager postManager, EntityManager entityManager) {
 
     }
 
+    @Test
+    void updateFail() {
+        Owner owner = createOwner();
+        Pet pet = createPet(owner.getId());
+
+        Post post = postManager.create(PostFixture.createPostCreateRequest(), pet.getId(), owner.getEmail().address());
+        entityManager.flush();
+        entityManager.clear();
+
+
+    }
+
     Owner createOwner() {
         Owner owner = Owner.register(createOwnerRegisterRequest(), createPasswordEncoder());
 

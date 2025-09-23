@@ -2,6 +2,7 @@ package com.mungdori.sponge.adapter.webapi;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mungdori.sponge.adapter.security.config.WithMockOwner;
 import com.mungdori.sponge.application.pet.provided.PetManager;
 import com.mungdori.sponge.domain.owner.Owner;
 import com.mungdori.sponge.domain.pet.Pet;
@@ -41,7 +42,7 @@ class PetApiTest {
     final PetManager petManager;
 
     @Test
-    @WithMockUser(username = "test@mail.com", roles = {"OWNER"})
+    @WithMockOwner
     void register() throws JsonProcessingException {
         Owner owner = createOwner();
 
@@ -59,7 +60,7 @@ class PetApiTest {
     }
 
     @Test
-    @WithMockUser(username = "test@mail.com", roles = {"OWNER"})
+    @WithMockOwner(email = "mungdori999@gmail.com")
     void update() throws JsonProcessingException {
         Owner owner = createOwner();
         Pet pet = petManager.register(PetFixture.createPetRegisterRequest(), owner.getId());
@@ -78,7 +79,7 @@ class PetApiTest {
     }
 
     @Test
-    @WithMockUser(username = "test@mail.com", roles = {"OWNER"})
+    @WithMockUser(username = "mungdori999@gmail.com", roles = {"OWNER"})
     void registerValidFail() throws JsonProcessingException {
         PetRegisterRequest request = PetFixture.createPetRegisterRequest("바");
         String requestJson = objectMapper.writeValueAsString(request);

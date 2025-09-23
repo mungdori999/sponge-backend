@@ -18,7 +18,7 @@ public class WithMockCustomOwnerSecurityContextFactory implements WithSecurityCo
     public SecurityContext createSecurityContext(WithMockOwner annotation) {
         final SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
         UserDetailsImpl userDetails
-                = new UserDetailsImpl("test@mail.com", "nickname", "secret", List.of(new SimpleGrantedAuthority(OWNER.name())));
+                = new UserDetailsImpl(annotation.email(), "nickname", "secret", List.of(new SimpleGrantedAuthority(OWNER.name())));
         final UsernamePasswordAuthenticationToken authenticationToken
                 = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
         securityContext.setAuthentication(authenticationToken);
