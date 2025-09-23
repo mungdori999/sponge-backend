@@ -93,7 +93,7 @@ class PetApiTest {
     }
 
     @Test
-    @WithMockOwner(email = "unvalid@gmail.com")
+    @WithMockOwner(email = "invalid@gmail.com")
     void updateFail() throws JsonProcessingException {
         Owner owner = createOwner();
         Pet pet = petManager.register(PetFixture.createPetRegisterRequest(), owner.getId());

@@ -44,7 +44,7 @@ record PostManagerTest(PostManager postManager, EntityManager entityManager) {
 
         var request = PostFixture.createPostInfoRequest();
 
-        post = postManager.update(post.getId(),request,pet.getId(),owner.getEmail().address());
+        post = postManager.update(post.getId(), request, owner.getEmail().address());
 
         assertThat(post.getUpdatedAt()).isNotNull();
         assertThat(post.getTitle()).isEqualTo(request.title());
@@ -60,6 +60,8 @@ record PostManagerTest(PostManager postManager, EntityManager entityManager) {
         entityManager.flush();
         entityManager.clear();
 
+        assertThatThrownBy(() -> postManager.update(post.getId(),PostFixture.createPostInfoRequest(),"invalid@test.com" ))
+                .isInstanceOf(IllegalArgumentException.class);
 
     }
 

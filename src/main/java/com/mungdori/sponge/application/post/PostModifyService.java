@@ -38,11 +38,11 @@ public class PostModifyService implements PostManager {
     }
 
     @Override
-    public Post update(Long postId, PostInfoUpdateRequest postInfoUpdateRequest, Long petId, String email) {
-
-        checkValidMyAccount(petId, email);
+    public Post update(Long postId, PostInfoUpdateRequest postInfoUpdateRequest, String email) {
 
         Post post = postFinder.find(postId);
+
+        checkValidMyAccount(post.getPetId(), email);
 
         post.update(postInfoUpdateRequest);
 

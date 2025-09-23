@@ -58,7 +58,7 @@ record PetManagerTest(PetManager petManager, EntityManager entityManager)  {
 
         var request = createPetInfoUpdateRequest();
 
-         Assertions.assertThatThrownBy(()-> petManager.update(pet.getId(),request,"unvalidEmail@naver.com"))
+         Assertions.assertThatThrownBy(()-> petManager.update(pet.getId(),request,"invalid@naver.com"))
              .isInstanceOf(IllegalArgumentException.class);
     }
 

@@ -9,5 +9,5 @@ public interface PostManager {
 
     Post create(@Valid PostCreateRequest postCreateRequest, Long petId, String email);
 
-    Post update(Long postId, @Valid PostInfoUpdateRequest postInfoUpdateRequest, Long petId, String email);
+    Post update(Long postId, @Valid PostInfoUpdateRequest postInfoUpdateRequest, String email);
 }
