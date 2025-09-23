@@ -18,6 +18,11 @@ public class ApiControllerAdvice extends ResponseEntityExceptionHandler {
         return getProblemDetail(HttpStatus.INTERNAL_SERVER_ERROR, exception);
     }
 
+    @ExceptionHandler({IllegalStateException.class,IllegalArgumentException.class})
+    public ProblemDetail handleException(RuntimeException exception) {
+        return getProblemDetail(HttpStatus.BAD_REQUEST, exception);
+    }
+
     @ExceptionHandler({DuplicateEmailException.class, DuplicateNicknameException.class})
     public ProblemDetail emailExceptionHandler(RuntimeException exception) {
         return getProblemDetail(HttpStatus.CONFLICT, exception);

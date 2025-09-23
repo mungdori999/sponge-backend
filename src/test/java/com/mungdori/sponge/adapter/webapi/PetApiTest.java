@@ -92,6 +92,23 @@ class PetApiTest {
                 .hasStatus(HttpStatus.BAD_REQUEST);
     }
 
+    @Test
+    @WithMockOwner(email = "unvalid@gmail.com")
+    void updateFail() throws JsonProcessingException {
+        Owner owner = createOwner();
+        Pet pet = petManager.register(PetFixture.createPetRegisterRequest(), owner.getId());
+
+        PetInfoUpdateRequest request = PetFixture.createPetInfoUpdateRequest();
+        String requestJson = objectMapper.writeValueAsString(request);
+
+        MvcTestResult result = mvcTester.patch().uri("/api/pet/{id}", pet.getId()).contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content(requestJson).exchange();
+
+        assertThat(result)
+                .apply(print())
+                .hasStatus(HttpStatus.BAD_REQUEST);
+    }
+
     Owner createOwner() {
         Owner owner = Owner.register(createOwnerRegisterRequest(), createPasswordEncoder());
 
