@@ -5,6 +5,7 @@ import com.mungdori.sponge.domain.pet.Pet;
 import com.mungdori.sponge.domain.pet.PetFixture;
 import com.mungdori.sponge.domain.post.Post;
 import com.mungdori.sponge.domain.post.PostFixture;
+import com.mungdori.sponge.domain.post.PostInfoUpdateRequest;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
@@ -37,12 +38,16 @@ record PostManagerTest(PostManager postManager, EntityManager entityManager) {
         Owner owner = createOwner();
         Pet pet = createPet(owner.getId());
 
-        postManager.create(PostFixture.createPostCreateRequest(), pet.getId(), owner.getEmail().address());
+        Post post = postManager.create(PostFixture.createPostCreateRequest(), pet.getId(), owner.getEmail().address());
         entityManager.flush();
         entityManager.clear();
 
+        var request = PostFixture.createPostInfoRequest();
 
+        post = postManager.update(post.getId(),request,pet.getId(),owner.getEmail().address());
 
+        assertThat(post.getUpdatedAt()).isNotNull();
+        assertThat(post.getTitle()).isEqualTo(request.title());
 
     }
 
