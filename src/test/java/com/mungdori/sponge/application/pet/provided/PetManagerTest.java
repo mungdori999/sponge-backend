@@ -4,6 +4,7 @@ import com.mungdori.sponge.domain.owner.Owner;
 import com.mungdori.sponge.domain.pet.Pet;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -45,6 +46,20 @@ record PetManagerTest(PetManager petManager, EntityManager entityManager)  {
         assertThat(pet.getName()).isEqualTo(request.name());
 
 
+    }
+
+    @Test
+    void updateFail() {
+        Owner owner = createOwner();
+
+        Pet pet = petManager.register(createPetRegisterRequest(), owner.getId());
+        entityManager.flush();
+        entityManager.clear();
+
+        var request = createPetInfoUpdateRequest();
+
+         Assertions.assertThatThrownBy(()-> petManager.update(pet.getId(),request,"unvalidEmail@naver.com"))
+             .isInstanceOf(IllegalArgumentException.class);
     }
 
     Owner createOwner() {
