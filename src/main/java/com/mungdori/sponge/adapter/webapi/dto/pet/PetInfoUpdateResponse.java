@@ -10,9 +10,10 @@ public record PetInfoUpdateResponse(
         String breed,
         GenderType gender,
         int age,
-        float weight) {
+        float weight,
+        String petImgUrl) {
 
     public static PetInfoUpdateResponse of(Pet pet) {
-        return new PetInfoUpdateResponse(pet.getId(), pet.getName(), pet.getBreed(), pet.getGender(), pet.getAge(), pet.getWeight());
+        return new PetInfoUpdateResponse(pet.getId(), pet.getName(), pet.getBreed(), pet.getGender(), pet.getAge(), pet.getWeight(), pet.getPetImgUrl());
     }
 }

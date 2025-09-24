@@ -16,6 +16,7 @@ public record PetInfoUpdateRequest(
         @Min(1)
         int age,
         @Positive
-        float weight
+        float weight,
+        String petImgUrl
 ) {
 }

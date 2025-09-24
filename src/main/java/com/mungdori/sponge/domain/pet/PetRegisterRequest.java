@@ -16,6 +16,8 @@ public record PetRegisterRequest(
         @Min(1)
         int age,
         @Positive
-        float weight
+        float weight,
+
+        String petImgUrl
 ) {
 }

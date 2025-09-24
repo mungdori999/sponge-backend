@@ -33,6 +33,9 @@ public class Pet extends AbstractEntity {
     @Column(name = "weight", nullable = false)
     private float weight;
 
+    @Column(name = "pet_img_url")
+    private String petImgUrl;
+
     @Column(name = "owner_id")
     private Long ownerId;
 
@@ -47,6 +50,7 @@ public class Pet extends AbstractEntity {
         pet.weight = registerRequest.weight();
 
         pet.ownerId = ownerId;
+        pet.petImgUrl = registerRequest.petImgUrl();
 
         return pet;
     }

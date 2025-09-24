@@ -1,6 +1,5 @@
 package com.mungdori.sponge.application.pet;
 
-import com.mungdori.sponge.application.owner.provided.OwnerFinder;
 import com.mungdori.sponge.application.owner.required.OwnerRepository;
 import com.mungdori.sponge.application.pet.provided.PetFinder;
 import com.mungdori.sponge.application.pet.required.PetRepository;

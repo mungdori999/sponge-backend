@@ -56,7 +56,8 @@ class PetApiTest {
         assertThat(result)
                 .hasStatusOk()
                 .bodyJson()
-                .hasPathSatisfying("$.petId", notNull());
+                .hasPathSatisfying("$.petId", notNull())
+                .hasPathSatisfying("$.petImgUrl", notNull());
     }
 
     @Test

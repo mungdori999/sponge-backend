@@ -1,6 +1,7 @@
 package com.mungdori.sponge.adapter.webapi;
 
 import com.mungdori.sponge.adapter.security.utils.AuthorizationUtil;
+import com.mungdori.sponge.adapter.webapi.dto.pet.PetFindResponse;
 import com.mungdori.sponge.adapter.webapi.dto.pet.PetInfoUpdateResponse;
 import com.mungdori.sponge.adapter.webapi.dto.pet.PetRegisterResponse;
 import com.mungdori.sponge.application.pet.provided.PetFinder;
@@ -11,6 +12,8 @@ import com.mungdori.sponge.domain.pet.PetRegisterRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,8 +26,12 @@ public class PetApi {
 
 
     @GetMapping()
-    public void getMyPets() {
-        petFinder.findList(authorizationUtil.getEmail());
+    public List<PetFindResponse> getMyPets() {
+        List<Pet> petList = petFinder.findList(authorizationUtil.getEmail());
+
+        return petList.stream()
+                .map(PetFindResponse::of)
+                .toList();
     }
 
     @PostMapping()
