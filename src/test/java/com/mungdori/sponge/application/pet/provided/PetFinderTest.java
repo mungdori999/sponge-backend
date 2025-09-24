@@ -12,7 +12,6 @@ import java.util.List;
 import static com.mungdori.sponge.domain.owner.OwnerFixture.createOwnerRegisterRequest;
 import static com.mungdori.sponge.domain.owner.OwnerFixture.createPasswordEncoder;
 import static com.mungdori.sponge.domain.pet.PetFixture.createPetRegisterRequest;
-import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 

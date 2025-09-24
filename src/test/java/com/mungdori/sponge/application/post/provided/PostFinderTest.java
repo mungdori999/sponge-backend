@@ -12,7 +12,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import static com.mungdori.sponge.domain.owner.OwnerFixture.createOwnerRegisterRequest;
 import static com.mungdori.sponge.domain.owner.OwnerFixture.createPasswordEncoder;
-import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Transactional

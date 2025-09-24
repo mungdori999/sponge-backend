@@ -2,7 +2,6 @@ package com.mungdori.sponge.application.owner;
 
 import com.mungdori.sponge.application.owner.provided.OwnerFinder;
 import com.mungdori.sponge.application.owner.required.OwnerRepository;
-import com.mungdori.sponge.application.pet.provided.PetFinder;
 import com.mungdori.sponge.domain.owner.Owner;
 import com.mungdori.sponge.domain.shared.Email;
 import jakarta.transaction.Transactional;

@@ -1,9 +1,11 @@
 package com.mungdori.sponge.domain.pet;
 
 import com.mungdori.sponge.domain.AbstractEntity;
-import com.mungdori.sponge.domain.owner.Owner;
 import com.mungdori.sponge.domain.shared.GenderType;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

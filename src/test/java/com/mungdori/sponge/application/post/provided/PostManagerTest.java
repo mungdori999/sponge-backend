@@ -5,7 +5,6 @@ import com.mungdori.sponge.domain.pet.Pet;
 import com.mungdori.sponge.domain.pet.PetFixture;
 import com.mungdori.sponge.domain.post.Post;
 import com.mungdori.sponge.domain.post.PostFixture;
-import com.mungdori.sponge.domain.post.PostInfoUpdateRequest;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
@@ -13,9 +12,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import static com.mungdori.sponge.domain.owner.OwnerFixture.createOwnerRegisterRequest;
 import static com.mungdori.sponge.domain.owner.OwnerFixture.createPasswordEncoder;
-import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SpringBootTest
 @Transactional

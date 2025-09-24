@@ -1,8 +1,6 @@
 package com.mungdori.sponge.application.post;
 
-import com.mungdori.sponge.application.owner.provided.OwnerFinder;
 import com.mungdori.sponge.application.owner.required.OwnerRepository;
-import com.mungdori.sponge.application.pet.provided.PetFinder;
 import com.mungdori.sponge.application.pet.required.PetRepository;
 import com.mungdori.sponge.application.post.provided.PostFinder;
 import com.mungdori.sponge.application.post.provided.PostManager;
@@ -13,7 +11,6 @@ import com.mungdori.sponge.domain.post.Post;
 import com.mungdori.sponge.domain.post.PostCreateRequest;
 import com.mungdori.sponge.domain.post.PostInfoUpdateRequest;
 import com.mungdori.sponge.domain.shared.Email;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

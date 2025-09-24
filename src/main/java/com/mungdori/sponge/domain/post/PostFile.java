@@ -2,7 +2,9 @@ package com.mungdori.sponge.domain.post;
 
 import com.mungdori.sponge.domain.AbstractEntity;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @Entity

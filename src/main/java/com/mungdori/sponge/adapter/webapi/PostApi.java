@@ -7,7 +7,6 @@ import com.mungdori.sponge.domain.post.Post;
 import com.mungdori.sponge.domain.post.PostCreateRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

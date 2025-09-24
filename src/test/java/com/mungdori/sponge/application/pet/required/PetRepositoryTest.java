@@ -6,6 +6,8 @@ import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import java.util.List;
+
 import static com.mungdori.sponge.domain.owner.OwnerFixture.createOwnerRegisterRequest;
 import static com.mungdori.sponge.domain.owner.OwnerFixture.createPasswordEncoder;
 import static com.mungdori.sponge.domain.pet.PetFixture.createPetRegisterRequest;
@@ -24,6 +26,21 @@ record PetRepositoryTest(PetRepository petRepository, EntityManager entityManage
         petRepository.save(pet);
 
         assertThat(pet.getId()).isNotNull();
+
+    }
+
+    @Test
+    void findByOwnerId() {
+        Owner owner = createOwner();
+
+        for (int i = 0; i < 10; i++) {
+            Pet pet = Pet.register(createPetRegisterRequest(), owner.getId());
+            petRepository.save(pet);
+        }
+
+        List<Pet> petList = petRepository.findByOwnerId(owner.getId());
+
+        assertThat(petList).hasSize(10);
 
     }
 
