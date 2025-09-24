@@ -23,13 +23,13 @@ public class OwnerApi {
     private final AuthorizationUtil authorizationUtil;
 
     @GetMapping("/{ownerId}")
-    public OwnerFindResponse findOwner(@PathVariable Long ownerId) {
+    public OwnerFindResponse getOwner(@PathVariable Long ownerId) {
         Owner owner = ownerFinder.findById(ownerId);
         return OwnerFindResponse.of(owner);
     }
 
     @GetMapping()
-    public OwnerFindResponse findMyInfo(){
+    public OwnerFindResponse getMyInfo(){
         Owner owner = ownerFinder.findByEmail(authorizationUtil.getEmail());
         return OwnerFindResponse.of(owner);
     }

@@ -35,7 +35,7 @@ class OwnerApiTest {
     final OwnerManager ownerManager;
 
     @Test
-    void findOwner()  {
+    void getOwner()  {
         Owner owner = ownerManager.register(OwnerFixture.createOwnerRegisterRequest());
 
         MvcTestResult result = mvcTester.get().uri("/api/owner/{id}", owner.getId())
@@ -50,7 +50,7 @@ class OwnerApiTest {
 
     @Test
     @WithMockOwner
-    void findMyInfo()  {
+    void getMyInfo()  {
         Owner owner = ownerManager.register(OwnerFixture.createOwnerRegisterRequest("test@mail.com","nickname"));
 
         MvcTestResult result = mvcTester.get().uri("/api/owner")

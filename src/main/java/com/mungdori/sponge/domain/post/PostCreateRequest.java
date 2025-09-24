@@ -20,4 +20,5 @@ public record PostCreateRequest(
 
         List<String> fileUrlList
 ) {
+
 }
