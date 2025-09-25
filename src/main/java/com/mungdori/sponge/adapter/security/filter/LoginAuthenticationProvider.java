@@ -9,7 +9,6 @@ import com.mungdori.sponge.domain.shared.Email;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -46,14 +45,14 @@ public class LoginAuthenticationProvider implements AuthenticationProvider {
 
         if (OWNER.name().equalsIgnoreCase(loginType)) {
             userDetails = ownerRepository.findByEmail(new Email(email))
-                    .map(owner -> new UserDetailsImpl(owner.getEmail().address(), owner.getNickname(), owner.getPasswordHash(),
-                            List.of(new SimpleGrantedAuthority(OWNER.name()))))
+                    .map(owner -> new UserDetailsImpl(owner.getEmail().address(), owner.getNickname(), owner.getPasswordHash()
+                    ))
                     .orElseThrow(() -> new BadCredentialsException("Owner not found"));
 
         } else if (TRAINER.name().equalsIgnoreCase(loginType)) {
             userDetails = trainerRepository.findByEmail(new Email(email))
-                    .map(trainer -> new UserDetailsImpl(trainer.getEmail().address(), trainer.getNickname(), trainer.getPasswordHash(),
-                            List.of(new SimpleGrantedAuthority(TRAINER.name()))))
+                    .map(trainer -> new UserDetailsImpl(trainer.getEmail().address(), trainer.getNickname(), trainer.getPasswordHash()
+                    ))
                     .orElseThrow(() -> new BadCredentialsException("Trainer not found"));
         } else {
             throw new BadCredentialsException("Invalid loginType");
@@ -63,8 +62,9 @@ public class LoginAuthenticationProvider implements AuthenticationProvider {
         if (!passwordEncoder.matches(password, userDetails.getPassword())) {
             throw new BadCredentialsException("Invalid password");
         }
+
         return new LoginTypeAuthenticationToken(
-                userDetails, password, List.of(new SimpleGrantedAuthority("USER")), loginType);
+                userDetails, null, List.of(new SimpleGrantedAuthority("USER")), loginType);
 
     }
 

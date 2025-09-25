@@ -1,9 +1,11 @@
 package com.mungdori.sponge.adapter.security;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.List;
 
 public class UserDetailsImpl implements UserDetails {
 
@@ -12,19 +14,19 @@ public class UserDetailsImpl implements UserDetails {
     
     // 비밀번호를 여기에다가 담아야하는 지는 검증이 필요함
     private final String passwordHash;
-    private final Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetailsImpl(String email, String nickname, String passwordHash, Collection<? extends GrantedAuthority> authorities) {
+
+    public UserDetailsImpl(String email, String nickname, String passwordHash) {
         this.email = email;
         this.nickname = nickname;
         this.passwordHash = passwordHash;
-        this.authorities = authorities;
+
     }
 
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
+        return List.of(new SimpleGrantedAuthority("USER"));
     }
 
     @Override
