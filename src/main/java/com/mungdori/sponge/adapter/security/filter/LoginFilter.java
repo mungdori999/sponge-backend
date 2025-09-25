@@ -14,6 +14,7 @@ import org.springframework.security.authentication.AuthenticationServiceExceptio
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
@@ -22,6 +23,8 @@ import org.springframework.util.StreamUtils;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 
@@ -78,6 +81,7 @@ public class LoginFilter extends AbstractAuthenticationProcessingFilter {
 
         LoginTypeAuthenticationToken authRequest =
                 new LoginTypeAuthenticationToken(email, password, loginType);
+
         setDetails(request, authRequest);
         return this.getAuthenticationManager().authenticate(authRequest);
     }

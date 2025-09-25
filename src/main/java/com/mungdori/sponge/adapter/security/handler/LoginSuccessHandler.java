@@ -1,6 +1,7 @@
 package com.mungdori.sponge.adapter.security.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mungdori.sponge.adapter.security.LoginTypeAuthenticationToken;
 import com.mungdori.sponge.adapter.security.UserDetailsImpl;
 import com.mungdori.sponge.adapter.security.utils.JWTUtil;
 import com.mungdori.sponge.application.token.provided.JWTManager;
@@ -28,10 +29,13 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         // email, loginType
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        LoginTypeAuthenticationToken authToken = (LoginTypeAuthenticationToken) authentication;
+
+        UserDetailsImpl userDetails = (UserDetailsImpl) authToken.getPrincipal();
+
         String email = userDetails.getEmail();
         String nickname = userDetails.getUsername();
-        String loginType = userDetails.getAuthorities().iterator().next().getAuthority();
+        String loginType = authToken.getLoginType();
 
 
         // JWT(Access/Refresh) 발급

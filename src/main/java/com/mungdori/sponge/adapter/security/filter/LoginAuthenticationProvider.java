@@ -46,13 +46,13 @@ public class LoginAuthenticationProvider implements AuthenticationProvider {
 
         if (OWNER.name().equalsIgnoreCase(loginType)) {
             userDetails = ownerRepository.findByEmail(new Email(email))
-                    .map(owner -> new UserDetailsImpl(owner.getEmail().address(), owner.getNickname(),owner.getPasswordHash(),
+                    .map(owner -> new UserDetailsImpl(owner.getEmail().address(), owner.getNickname(), owner.getPasswordHash(),
                             List.of(new SimpleGrantedAuthority(OWNER.name()))))
                     .orElseThrow(() -> new BadCredentialsException("Owner not found"));
 
         } else if (TRAINER.name().equalsIgnoreCase(loginType)) {
             userDetails = trainerRepository.findByEmail(new Email(email))
-                    .map(trainer -> new UserDetailsImpl(trainer.getEmail().address(), trainer.getNickname(),trainer.getPasswordHash(),
+                    .map(trainer -> new UserDetailsImpl(trainer.getEmail().address(), trainer.getNickname(), trainer.getPasswordHash(),
                             List.of(new SimpleGrantedAuthority(TRAINER.name()))))
                     .orElseThrow(() -> new BadCredentialsException("Trainer not found"));
         } else {
@@ -63,11 +63,9 @@ public class LoginAuthenticationProvider implements AuthenticationProvider {
         if (!passwordEncoder.matches(password, userDetails.getPassword())) {
             throw new BadCredentialsException("Invalid password");
         }
+        return new LoginTypeAuthenticationToken(
+                userDetails, password, List.of(new SimpleGrantedAuthority("USER")), loginType);
 
-        // 인증 성공 → Authentication 객체 반환
-        return new UsernamePasswordAuthenticationToken(
-                userDetails, password, userDetails.getAuthorities()
-        );
     }
 
     @Override

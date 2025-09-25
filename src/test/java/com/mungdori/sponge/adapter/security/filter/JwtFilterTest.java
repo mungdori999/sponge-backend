@@ -51,7 +51,7 @@ record JwtFilterTest(JwtFilter jwtFilter) {
         assertThat(auth.getName()).isEqualTo("test@mail.com");
         assertThat(auth.getAuthorities())
                 .extracting("authority")
-                .containsExactly("OWNER");
+                .containsExactly("USER");
     }
 
     @Test

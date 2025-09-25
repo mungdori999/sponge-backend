@@ -1,6 +1,7 @@
 package com.mungdori.sponge.adapter.security.config;
 
 
+import com.mungdori.sponge.adapter.security.LoginTypeAuthenticationToken;
 import com.mungdori.sponge.adapter.security.UserDetailsImpl;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -17,8 +18,8 @@ public class WithMockCustomOwnerSecurityContextFactory implements WithSecurityCo
     @Override
     public SecurityContext createSecurityContext(WithMockOwner annotation) {
         final SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
-        final UsernamePasswordAuthenticationToken authenticationToken
-                = new UsernamePasswordAuthenticationToken(annotation.email(), null, List.of(new SimpleGrantedAuthority(OWNER.name())));
+        final LoginTypeAuthenticationToken authenticationToken
+                = new LoginTypeAuthenticationToken(annotation.email(), null, List.of(new SimpleGrantedAuthority("USER")), annotation.loginType());
         securityContext.setAuthentication(authenticationToken);
 
         return securityContext;

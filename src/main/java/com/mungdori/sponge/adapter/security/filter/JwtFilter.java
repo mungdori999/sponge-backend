@@ -1,5 +1,6 @@
 package com.mungdori.sponge.adapter.security.filter;
 
+import com.mungdori.sponge.adapter.security.LoginTypeAuthenticationToken;
 import com.mungdori.sponge.adapter.security.UserDetailsImpl;
 import com.mungdori.sponge.adapter.security.utils.JWTUtil;
 import jakarta.servlet.FilterChain;
@@ -64,10 +65,8 @@ public class JwtFilter extends OncePerRequestFilter {
         String email = JWTUtil.getEmail(token);
         String loginType = JWTUtil.getLoginType(token);
 
-        List<GrantedAuthority> authorities =
-                Collections.singletonList(new SimpleGrantedAuthority(loginType));
-
-        return new UsernamePasswordAuthenticationToken(email, null, authorities);
+        return new LoginTypeAuthenticationToken(
+                email, null, List.of(new SimpleGrantedAuthority("USER")), loginType);
     }
 
     /**
