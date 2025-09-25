@@ -1,5 +1,6 @@
 package com.mungdori.sponge.adapter.security.filter;
 
+import com.mungdori.sponge.adapter.security.UserDetailsImpl;
 import com.mungdori.sponge.adapter.security.utils.JWTUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

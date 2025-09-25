@@ -14,9 +14,8 @@ public class AuthorizationUtil {
         if (authentication.getClass() == AnonymousAuthenticationToken.class) {
             return null;
         }
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        return authentication.getPrincipal().toString();
 
-        return userDetails.getEmail();
     }
 
 //    public String getLoginType() {
