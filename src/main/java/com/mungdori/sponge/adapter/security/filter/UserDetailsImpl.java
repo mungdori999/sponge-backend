@@ -1,4 +1,4 @@
-package com.mungdori.sponge.adapter.security;
+package com.mungdori.sponge.adapter.security.filter;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -11,8 +11,7 @@ public class UserDetailsImpl implements UserDetails {
 
     private final String email;
     private final String nickname;
-    
-    // 비밀번호를 여기에다가 담아야하는 지는 검증이 필요함
+
     private final String passwordHash;
 
 

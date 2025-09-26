@@ -2,7 +2,7 @@ package com.mungdori.sponge.adapter.security.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mungdori.sponge.adapter.security.LoginTypeAuthenticationToken;
-import com.mungdori.sponge.adapter.security.UserDetailsImpl;
+import com.mungdori.sponge.adapter.security.filter.UserDetailsImpl;
 import com.mungdori.sponge.adapter.security.utils.JWTUtil;
 import com.mungdori.sponge.application.token.provided.JWTManager;
 import jakarta.servlet.ServletException;

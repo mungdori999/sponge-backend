@@ -1,6 +1,5 @@
 package com.mungdori.sponge.adapter.security.utils;
 
-import com.mungdori.sponge.adapter.security.UserDetailsImpl;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

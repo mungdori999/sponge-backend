@@ -2,7 +2,6 @@ package com.mungdori.sponge.adapter.security.filter;
 
 import com.mungdori.sponge.adapter.security.LoginTypeAuthenticationToken;
 import com.mungdori.sponge.adapter.security.SecurePasswordEncoder;
-import com.mungdori.sponge.adapter.security.UserDetailsImpl;
 import com.mungdori.sponge.application.owner.required.OwnerRepository;
 import com.mungdori.sponge.application.trainer.required.TrainerRepository;
 import com.mungdori.sponge.domain.shared.Email;
@@ -30,7 +29,7 @@ public class LoginAuthenticationProvider implements AuthenticationProvider {
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        // CustomAuthenticationToken으로 캐스팅
+
         LoginTypeAuthenticationToken authToken = (LoginTypeAuthenticationToken) authentication;
 
         String email = authToken.getName();
