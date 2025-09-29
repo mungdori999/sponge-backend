@@ -1,17 +1,18 @@
 package com.mungdori.sponge.domain.post;
 
+import jakarta.validation.constraints.NotBlank;
 import org.springframework.lang.NonNull;
 
 import java.util.List;
 
 public record PostCreateRequest(
-        @NonNull
+        @NotBlank
         String title,
 
-        @NonNull
+        @NotBlank
         String content,
 
-        @NonNull
+        @NotBlank
         String duration,
 
         List<Long> categoryCodeList,

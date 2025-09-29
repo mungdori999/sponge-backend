@@ -1,23 +1,20 @@
 package com.mungdori.sponge.domain.pet;
 
 import com.mungdori.sponge.domain.shared.GenderType;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.Size;
-import org.springframework.lang.NonNull;
+import jakarta.validation.constraints.*;
 
 public record PetRegisterRequest(
         @Size(min = 2, max = 10)
         String name,
-        @NonNull
+        @NotBlank
         String breed,
-        @NonNull
+        @NotNull
         GenderType gender,
         @Min(1)
         int age,
         @Positive
         float weight,
-
+        @NotNull
         String petImgUrl
 ) {
 }

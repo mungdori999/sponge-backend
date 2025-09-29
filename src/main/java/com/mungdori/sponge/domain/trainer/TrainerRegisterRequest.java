@@ -1,9 +1,7 @@
 package com.mungdori.sponge.domain.trainer;
 
 import com.mungdori.sponge.domain.shared.GenderType;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
@@ -13,7 +11,7 @@ public record TrainerRegisterRequest(@Email
                                      String email,
                                      @Size(min = 2, max = 10)
                                      String nickname,
-                                     @NonNull
+                                     @NotNull
                                      GenderType gender,
                                      @Nullable
                                      String phoneNumber,
