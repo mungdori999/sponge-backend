@@ -1,6 +1,7 @@
 package com.mungdori.sponge.application.pet;
 
 import com.mungdori.sponge.application.owner.provided.OwnerFinder;
+import com.mungdori.sponge.application.owner.required.OwnerRepository;
 import com.mungdori.sponge.application.pet.provided.PetFinder;
 import com.mungdori.sponge.application.pet.provided.PetManager;
 import com.mungdori.sponge.application.pet.required.PetRepository;
@@ -21,11 +22,11 @@ public class PetModifyService implements PetManager {
 
     private final PetRepository petRepository;
     private final PetFinder petFinder;
-    private final OwnerFinder ownerFinder;
+    private final OwnerRepository ownerRepository;
 
     @Override
     public Pet register(PetRegisterRequest registerRequest, Long ownerId) {
-        Owner owner = ownerFinder.findById(ownerId);
+        Owner owner = ownerRepository.findById(ownerId).orElseThrow(() -> new IllegalArgumentException("Owner not found"));
 
         Pet pet = Pet.register(registerRequest, owner.getId());
 
@@ -38,7 +39,7 @@ public class PetModifyService implements PetManager {
     public Pet update(Long petId, PetInfoUpdateRequest updateRequest, Long ownerId) {
         Pet pet = petFinder.find(petId);
 
-        Owner owner = ownerFinder.findById(ownerId);
+        Owner owner = ownerRepository.findById(ownerId).orElseThrow(() -> new IllegalArgumentException("Owner not found"));
 
         checkValidMyAccount(pet, owner);
 

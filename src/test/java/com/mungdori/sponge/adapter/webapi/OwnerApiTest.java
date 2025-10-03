@@ -11,11 +11,13 @@ import com.mungdori.sponge.domain.owner.OwnerRegisterRequest;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.web.servlet.assertj.MockMvcTester;
 import org.springframework.test.web.servlet.assertj.MvcTestResult;
 
@@ -34,12 +36,14 @@ class OwnerApiTest {
     final MockMvcTester mvcTester;
     final ObjectMapper objectMapper;
     final OwnerManager ownerManager;
+    final EntityManager entityManager;
+
 
     @Test
     void getOwner()  {
         Owner owner = ownerManager.register(OwnerFixture.createOwnerRegisterRequest());
 
-        MvcTestResult result = mvcTester.get().uri("/api/owner/{id}", owner.getId())
+        MvcTestResult result = mvcTester.get().uri("/api/owner/{ownerId}", owner.getId())
                 .exchange();
 
         assertThat(result)
@@ -50,10 +54,9 @@ class OwnerApiTest {
     }
 
     @Test
-    @WithMockOwner
+    @WithMockOwner(id = owner.getId())
     void getMyInfo()  {
-        Owner owner = ownerManager.register(OwnerFixture.createOwnerRegisterRequest("test@mail.com","nickname"));
-
+        Owner owner = ownerManager.register(OwnerFixture.createOwnerRegisterRequest());
         MvcTestResult result = mvcTester.get().uri("/api/owner")
                 .exchange();
 
