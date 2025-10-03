@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mungdori.sponge.adapter.security.config.WithMockOwner;
 import com.mungdori.sponge.application.pet.provided.PetManager;
-import com.mungdori.sponge.domain.owner.Owner;
 import com.mungdori.sponge.domain.pet.Pet;
 import com.mungdori.sponge.domain.pet.PetFixture;
 import com.mungdori.sponge.domain.pet.PetInfoUpdateRequest;
@@ -18,7 +17,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.assertj.MockMvcTester;
 import org.springframework.test.web.servlet.assertj.MvcTestResult;
 
@@ -26,8 +24,6 @@ import java.util.Objects;
 
 import static com.mungdori.sponge.AssertThatUtils.equalsTo;
 import static com.mungdori.sponge.AssertThatUtils.notNull;
-import static com.mungdori.sponge.domain.owner.OwnerFixture.createOwnerRegisterRequest;
-import static com.mungdori.sponge.domain.owner.OwnerFixture.createPasswordEncoder;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
