@@ -9,14 +9,15 @@ import java.util.List;
 
 public class UserDetailsImpl implements UserDetails {
 
-    private final String email;
+    private final Long id;
     private final String nickname;
 
     private final String passwordHash;
 
 
-    public UserDetailsImpl(String email, String nickname, String passwordHash) {
-        this.email = email;
+    public UserDetailsImpl(Long id, String nickname, String passwordHash) {
+        this.id = id;
+
         this.nickname = nickname;
         this.passwordHash = passwordHash;
 
@@ -33,8 +34,8 @@ public class UserDetailsImpl implements UserDetails {
         return passwordHash;
     }
 
-    public String getEmail() {
-        return email;
+    public Long getId() {
+        return id;
     }
 
     @Override

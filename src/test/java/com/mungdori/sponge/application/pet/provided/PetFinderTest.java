@@ -42,7 +42,7 @@ record PetFinderTest(PetFinder petFinder, PetManager petManager, EntityManager e
            petManager.register(createPetRegisterRequest(), owner.getId());
        }
 
-        List<Pet> petList = petFinder.findList(owner.getEmail().address());
+        List<Pet> petList = petFinder.findList(owner.getId());
 
        assertThat(petList).hasSize(10);
     }

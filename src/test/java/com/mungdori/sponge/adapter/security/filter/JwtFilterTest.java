@@ -37,7 +37,7 @@ record JwtFilterTest(JwtFilter jwtFilter) {
 
     @Test
     void token() throws Exception {
-        String token = JWTUtil.createJWT("test@mail.com", "nickname", LoginType.OWNER.name(), true);
+        String token = JWTUtil.createJWT(1L, "nickname", LoginType.OWNER.name(), true);
 
         MockHttpServletRequest request = new MockHttpServletRequest();
         request.addHeader("Authorization", "Bearer " + token);
@@ -48,7 +48,7 @@ record JwtFilterTest(JwtFilter jwtFilter) {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         assertThat(auth).isNotNull();
-        assertThat(auth.getName()).isEqualTo("test@mail.com");
+        assertThat(Long.valueOf(auth.getName())).isEqualTo(1L);
         assertThat(auth.getAuthorities())
                 .extracting("authority")
                 .containsExactly("USER");

@@ -35,10 +35,10 @@ public class PetModifyService implements PetManager {
     }
 
     @Override
-    public Pet update(Long petId, PetInfoUpdateRequest updateRequest, String email) {
+    public Pet update(Long petId, PetInfoUpdateRequest updateRequest, Long ownerId) {
         Pet pet = petFinder.find(petId);
 
-        Owner owner = ownerFinder.findByEmail(email);
+        Owner owner = ownerFinder.findById(ownerId);
 
         checkValidMyAccount(pet, owner);
 

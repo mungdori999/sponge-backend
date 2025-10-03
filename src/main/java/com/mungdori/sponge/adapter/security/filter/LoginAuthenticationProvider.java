@@ -44,13 +44,13 @@ public class LoginAuthenticationProvider implements AuthenticationProvider {
 
         if (OWNER.name().equalsIgnoreCase(loginType)) {
             userDetails = ownerRepository.findByEmail(new Email(email))
-                    .map(owner -> new UserDetailsImpl(owner.getEmail().address(), owner.getNickname(), owner.getPasswordHash()
+                    .map(owner -> new UserDetailsImpl(owner.getId(), owner.getNickname(), owner.getPasswordHash()
                     ))
                     .orElseThrow(() -> new BadCredentialsException("Owner not found"));
 
         } else if (TRAINER.name().equalsIgnoreCase(loginType)) {
             userDetails = trainerRepository.findByEmail(new Email(email))
-                    .map(trainer -> new UserDetailsImpl(trainer.getEmail().address(), trainer.getNickname(), trainer.getPasswordHash()
+                    .map(trainer -> new UserDetailsImpl(trainer.getId(), trainer.getNickname(), trainer.getPasswordHash()
                     ))
                     .orElseThrow(() -> new BadCredentialsException("Trainer not found"));
         } else {

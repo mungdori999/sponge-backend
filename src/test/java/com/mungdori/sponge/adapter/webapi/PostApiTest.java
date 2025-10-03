@@ -38,7 +38,7 @@ class PostApiTest {
 
 
     @Test
-    @WithMockOwner(email = "mungdori999@gmail.com")
+    @WithMockOwner
     void create() throws JsonProcessingException {
         Owner owner = createOwner();
         Pet pet = createPet(owner.getId());

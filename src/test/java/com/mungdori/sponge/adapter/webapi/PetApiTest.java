@@ -61,7 +61,7 @@ class PetApiTest {
     }
 
     @Test
-    @WithMockOwner(email = "mungdori999@gmail.com")
+    @WithMockOwner()
     void update() throws JsonProcessingException {
         Owner owner = createOwner();
         Pet pet = petManager.register(PetFixture.createPetRegisterRequest(), owner.getId());
@@ -80,7 +80,7 @@ class PetApiTest {
     }
 
     @Test
-    @WithMockUser(username = "mungdori999@gmail.com", roles = {"OWNER"})
+    @WithMockOwner()
     void registerValidFail() throws JsonProcessingException {
         PetRegisterRequest request = PetFixture.createPetRegisterRequest("바");
         String requestJson = objectMapper.writeValueAsString(request);
@@ -94,7 +94,7 @@ class PetApiTest {
     }
 
     @Test
-    @WithMockOwner(email = "invalid@gmail.com")
+    @WithMockOwner()
     void updateFail() throws JsonProcessingException {
         Owner owner = createOwner();
         Pet pet = petManager.register(PetFixture.createPetRegisterRequest(), owner.getId());

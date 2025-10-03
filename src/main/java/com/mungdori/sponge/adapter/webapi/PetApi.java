@@ -27,7 +27,7 @@ public class PetApi {
 
     @GetMapping()
     public List<PetFindResponse> getMyPets() {
-        List<Pet> petList = petFinder.findList(authorizationUtil.getEmail());
+        List<Pet> petList = petFinder.findList(authorizationUtil.getId());
 
         return petList.stream()
                 .map(PetFindResponse::of)
@@ -42,7 +42,7 @@ public class PetApi {
 
     @PatchMapping("/{petId}")
     public PetInfoUpdateResponse update(@PathVariable Long petId, @RequestBody @Valid PetInfoUpdateRequest petInfoUpdateRequest) {
-        Pet pet = petManager.update(petId, petInfoUpdateRequest, authorizationUtil.getEmail());
+        Pet pet = petManager.update(petId, petInfoUpdateRequest, authorizationUtil.getId());
         return PetInfoUpdateResponse.of(pet);
     }
 }

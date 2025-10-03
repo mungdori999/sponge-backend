@@ -14,10 +14,10 @@ record AuthorizationUtilTest(AuthorizationUtil authorizationUtil) {
 
     @Test
     @WithMockOwner
-    void authorizationEmail() {
-        String email = authorizationUtil.getEmail();
+    void authorizationId() {
+        Long id = authorizationUtil.getId();
 
 
-        assertThat(email).isEqualTo("test@mail.com");
+        assertThat(id).isEqualTo(1L);
     }
 }

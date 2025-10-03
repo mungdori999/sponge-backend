@@ -9,7 +9,7 @@ import java.lang.annotation.RetentionPolicy;
 @WithSecurityContext(factory = WithMockCustomOwnerSecurityContextFactory.class)
 public @interface WithMockOwner {
 
-    String email() default "test@mail.com";
+    long id() default 1;
 
     String loginType() default "OWNER";
 

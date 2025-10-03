@@ -29,8 +29,8 @@ public class OwnerApi {
     }
 
     @GetMapping()
-    public OwnerFindResponse getMyInfo(){
-        Owner owner = ownerFinder.findByEmail(authorizationUtil.getEmail());
+    public OwnerFindResponse getMyInfo() {
+        Owner owner = ownerFinder.findById(authorizationUtil.getId());
         return OwnerFindResponse.of(owner);
     }
 
@@ -41,9 +41,9 @@ public class OwnerApi {
         return OwnerRegisterResponse.of(owner);
     }
 
-    @PatchMapping("/{ownerId}")
-    public OwnerInfoUpdateResponse update(@PathVariable Long ownerId, @RequestBody @Valid OwnerInfoUpdateRequest updateRequest) {
-        Owner owner = ownerManager.update(ownerId, updateRequest);
+    @PatchMapping()
+    public OwnerInfoUpdateResponse update(@RequestBody @Valid OwnerInfoUpdateRequest updateRequest) {
+        Owner owner = ownerManager.update(authorizationUtil.getId(), updateRequest);
         return OwnerInfoUpdateResponse.of(owner);
     }
 }

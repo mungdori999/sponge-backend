@@ -8,5 +8,5 @@ public interface PetFinder {
 
     Pet find (Long petId);
 
-    List<Pet> findList(String email);
+    List<Pet> findList(Long ownerId);
 }

@@ -28,9 +28,9 @@ public class PostModifyService implements PostManager {
     private final PostFinder postFinder;
 
     @Override
-    public Post create(PostCreateRequest postCreateRequest, Long petId, String email) {
+    public Post create(PostCreateRequest postCreateRequest, Long petId, Long ownerId) {
 
-        checkValidMyAccount(petId, email);
+        checkValidMyAccount(petId, ownerId);
 
         Post post = Post.create(postCreateRequest, petId);
 
@@ -38,11 +38,11 @@ public class PostModifyService implements PostManager {
     }
 
     @Override
-    public Post update(Long postId, PostInfoUpdateRequest postInfoUpdateRequest, String email) {
+    public Post update(Long postId, PostInfoUpdateRequest postInfoUpdateRequest, Long ownerId) {
 
         Post post = postFinder.find(postId);
 
-        checkValidMyAccount(post.getPetId(), email);
+        checkValidMyAccount(post.getPetId(), ownerId);
 
         post.update(postInfoUpdateRequest);
 
@@ -51,9 +51,9 @@ public class PostModifyService implements PostManager {
         return post;
     }
 
-    private void checkValidMyAccount(Long petId, String email) {
+    private void checkValidMyAccount(Long petId, Long ownerId) {
         Pet pet = petRepository.findById(petId).orElseThrow(() -> new IllegalArgumentException("Pet not found"));
-        Owner owner = ownerRepository.findByEmail(new Email(email)).orElseThrow(() -> new IllegalArgumentException("Owner not found"));
+        Owner owner = ownerRepository.findById(ownerId).orElseThrow(() -> new IllegalArgumentException("Owner not found"));
 
         if (!pet.getOwnerId().equals(owner.getId())) {
             throw new IllegalArgumentException("자신의 계정이 아닙니다!");

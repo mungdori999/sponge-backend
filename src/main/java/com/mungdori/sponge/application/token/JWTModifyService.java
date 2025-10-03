@@ -16,7 +16,7 @@ public class JWTModifyService implements JWTManager {
 
 
     @Override
-    public RefreshToken save(String email, String refreshToken) {
+    public RefreshToken save(String refreshToken) {
         RefreshToken token = RefreshToken.create(refreshToken);
 
         refreshTokenRepository.save(token);

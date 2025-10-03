@@ -8,6 +8,7 @@ import com.mungdori.sponge.domain.owner.Owner;
 import com.mungdori.sponge.domain.owner.OwnerFixture;
 import com.mungdori.sponge.domain.owner.OwnerInfoUpdateRequest;
 import com.mungdori.sponge.domain.owner.OwnerRegisterRequest;
+import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -81,12 +82,12 @@ class OwnerApiTest {
     @Test
     @WithMockOwner
     void update() throws JsonProcessingException {
-        Owner owner = ownerManager.register(OwnerFixture.createOwnerRegisterRequest());
+        ownerManager.register(OwnerFixture.createOwnerRegisterRequest());
 
         OwnerInfoUpdateRequest request = OwnerFixture.createOwnerInfoUpdateRequest("newnick");
         String requestJson = objectMapper.writeValueAsString(request);
 
-        MvcTestResult result = mvcTester.patch().uri("/api/owner/{id}", owner.getId()).contentType(MediaType.APPLICATION_JSON_VALUE)
+        MvcTestResult result = mvcTester.patch().uri("/api/owner").contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(requestJson).exchange();
 
         assertThat(result)

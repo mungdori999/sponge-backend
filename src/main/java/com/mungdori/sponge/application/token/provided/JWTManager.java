@@ -5,7 +5,7 @@ import com.mungdori.sponge.domain.token.RefreshToken;
 public interface JWTManager {
 
 
-    RefreshToken save (String email, String refreshToken);
+    RefreshToken save (String refreshToken);
 
     void delete(String refresh);
 }

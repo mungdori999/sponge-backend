@@ -58,11 +58,11 @@ public class JwtFilter extends OncePerRequestFilter {
      * JWT에서 Authentication 객체 생성
      */
     private Authentication getAuthentication(String token) {
-        String email = JWTUtil.getEmail(token);
+        Long id = JWTUtil.getId(token);
         String loginType = JWTUtil.getLoginType(token);
 
         return new LoginTypeAuthenticationToken(
-                email, null, List.of(new SimpleGrantedAuthority("USER")), loginType);
+                id, null, List.of(new SimpleGrantedAuthority("USER")), loginType);
     }
 
     /**

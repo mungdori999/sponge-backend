@@ -15,7 +15,7 @@ public class WithMockCustomOwnerSecurityContextFactory implements WithSecurityCo
     public SecurityContext createSecurityContext(WithMockOwner annotation) {
         final SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
         final LoginTypeAuthenticationToken authenticationToken
-                = new LoginTypeAuthenticationToken(annotation.email(), null, List.of(new SimpleGrantedAuthority("USER")), annotation.loginType());
+                = new LoginTypeAuthenticationToken(annotation.id(), null, List.of(new SimpleGrantedAuthority("USER")), annotation.loginType());
         securityContext.setAuthentication(authenticationToken);
 
         return securityContext;

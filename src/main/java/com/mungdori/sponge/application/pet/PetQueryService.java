@@ -5,7 +5,6 @@ import com.mungdori.sponge.application.pet.provided.PetFinder;
 import com.mungdori.sponge.application.pet.required.PetRepository;
 import com.mungdori.sponge.domain.owner.Owner;
 import com.mungdori.sponge.domain.pet.Pet;
-import com.mungdori.sponge.domain.shared.Email;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,8 +26,8 @@ public class PetQueryService implements PetFinder {
     }
 
     @Override
-    public List<Pet> findList(String email) {
-        Owner owner = ownerRepository.findByEmail(new Email(email))
+    public List<Pet> findList(Long ownerId) {
+        Owner owner = ownerRepository.findById(ownerId)
                 .orElseThrow(() -> new IllegalArgumentException("회원을 찾을 수 가 없습니다."));
 
         return petRepository.findByOwnerId(owner.getId());

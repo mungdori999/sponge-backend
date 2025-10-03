@@ -14,7 +14,7 @@ record JWTManagerTest(JWTManager jwtManager, EntityManager entityManager) {
 
     @Test
     void save() {
-        RefreshToken refreshToken = jwtManager.save("mungdori999@gmail.com", "refreshToken");
+        RefreshToken refreshToken = jwtManager.save( "refreshToken");
         entityManager.flush();
         entityManager.clear();
 
@@ -24,7 +24,7 @@ record JWTManagerTest(JWTManager jwtManager, EntityManager entityManager) {
 
     @Test
     void delete() {
-        RefreshToken refreshToken = jwtManager.save("mungdori999@gmail.com", "refreshToken");
+        RefreshToken refreshToken = jwtManager.save( "refreshToken");
         entityManager.flush();
         entityManager.clear();
 

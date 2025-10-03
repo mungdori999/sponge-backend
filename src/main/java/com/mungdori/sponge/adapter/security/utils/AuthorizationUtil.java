@@ -8,12 +8,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class AuthorizationUtil {
 
-    public String getEmail() {
+    public Long getId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication.getClass() == AnonymousAuthenticationToken.class) {
             return null;
         }
-        return authentication.getPrincipal().toString();
+        return (Long) authentication.getPrincipal();
 
     }
 

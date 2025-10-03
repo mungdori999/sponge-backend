@@ -7,7 +7,7 @@ import jakarta.validation.Valid;
 
 public interface PostManager {
 
-    Post create(@Valid PostCreateRequest postCreateRequest, Long petId, String email);
+    Post create(@Valid PostCreateRequest postCreateRequest, Long petId, Long ownerId);
 
-    Post update(Long postId, @Valid PostInfoUpdateRequest postInfoUpdateRequest, String email);
+    Post update(Long postId, @Valid PostInfoUpdateRequest postInfoUpdateRequest, Long ownerId);
 }

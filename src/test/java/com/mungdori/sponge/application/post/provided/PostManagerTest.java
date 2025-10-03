@@ -24,7 +24,7 @@ record PostManagerTest(PostManager postManager, EntityManager entityManager) {
         Owner owner = createOwner();
         Pet pet = createPet(owner.getId());
 
-        Post post = postManager.create(PostFixture.createPostCreateRequest(), pet.getId(), owner.getEmail().address());
+        Post post = postManager.create(PostFixture.createPostCreateRequest(), pet.getId(), owner.getId());
 
         assertThat(post.getCreatedAt()).isNotNull();
         assertThat(post.getPetId()).isEqualTo(pet.getId());
@@ -36,13 +36,13 @@ record PostManagerTest(PostManager postManager, EntityManager entityManager) {
         Owner owner = createOwner();
         Pet pet = createPet(owner.getId());
 
-        Post post = postManager.create(PostFixture.createPostCreateRequest(), pet.getId(), owner.getEmail().address());
+        Post post = postManager.create(PostFixture.createPostCreateRequest(), pet.getId(), owner.getId());
         entityManager.flush();
         entityManager.clear();
 
         var request = PostFixture.createPostInfoRequest();
 
-        post = postManager.update(post.getId(), request, owner.getEmail().address());
+        post = postManager.update(post.getId(), request, owner.getId());
 
         assertThat(post.getUpdatedAt()).isNotNull();
         assertThat(post.getTitle()).isEqualTo(request.title());
@@ -54,11 +54,11 @@ record PostManagerTest(PostManager postManager, EntityManager entityManager) {
         Owner owner = createOwner();
         Pet pet = createPet(owner.getId());
 
-        Post post = postManager.create(PostFixture.createPostCreateRequest(), pet.getId(), owner.getEmail().address());
+        Post post = postManager.create(PostFixture.createPostCreateRequest(), pet.getId(),owner.getId());
         entityManager.flush();
         entityManager.clear();
 
-        assertThatThrownBy(() -> postManager.update(post.getId(),PostFixture.createPostInfoRequest(),"invalid@test.com" ))
+        assertThatThrownBy(() -> postManager.update(post.getId(),PostFixture.createPostInfoRequest(),1L ))
                 .isInstanceOf(IllegalArgumentException.class);
 
     }

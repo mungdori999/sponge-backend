@@ -9,5 +9,5 @@ public interface PetManager {
 
     Pet register(@Valid PetRegisterRequest registerRequest, Long ownerId);
 
-    Pet update(Long petId, @Valid PetInfoUpdateRequest updateRequest,String email);
+    Pet update(Long petId, @Valid PetInfoUpdateRequest updateRequest,Long ownerId);
 }

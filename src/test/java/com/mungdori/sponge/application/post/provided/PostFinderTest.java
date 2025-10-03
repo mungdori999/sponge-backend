@@ -24,7 +24,7 @@ record PostFinderTest(PostFinder postFinder,PostManager postManager, EntityManag
         Owner owner = createOwner();
         Pet pet = createPet(owner.getId());
 
-        Post post = postManager.create(PostFixture.createPostCreateRequest(), pet.getId(), owner.getEmail().address());
+        Post post = postManager.create(PostFixture.createPostCreateRequest(), pet.getId(), owner.getId());
 
         entityManager.flush();
         entityManager.clear();

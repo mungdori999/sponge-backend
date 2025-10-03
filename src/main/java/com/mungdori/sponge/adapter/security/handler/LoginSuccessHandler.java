@@ -33,23 +33,22 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
         UserDetailsImpl userDetails = (UserDetailsImpl) authToken.getPrincipal();
 
-        String email = userDetails.getEmail();
+        Long id = userDetails.getId();
         String nickname = userDetails.getUsername();
         String loginType = authToken.getLoginType();
 
 
         // JWT(Access/Refresh) 발급
-        String accessToken = JWTUtil.createJWT(email, nickname, loginType, true);
-        String refreshToken = JWTUtil.createJWT(email, nickname, loginType, false);
+        String accessToken = JWTUtil.createJWT(id, nickname, loginType, true);
+        String refreshToken = JWTUtil.createJWT(id, nickname, loginType, false);
 
         // Refresh Token 저장 (화이트리스트)
-        jwtManager.save(email, refreshToken);
+        jwtManager.save(refreshToken);
 
         // 응답 JSON 데이터 구성
         Map<String, String> tokens = new HashMap<>();
         tokens.put("accessToken", accessToken);
         tokens.put("refreshToken", refreshToken);
-        tokens.put("email", email);
         tokens.put("nickname", nickname);
 
         // 응답 세팅

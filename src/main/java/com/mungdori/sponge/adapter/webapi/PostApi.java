@@ -19,7 +19,7 @@ public class PostApi {
 
     @PostMapping()
     public PostCreateResponse createPost(@RequestBody @Valid PostCreateRequest postCreateRequest, @RequestParam Long petId) {
-        Post post = postManager.create(postCreateRequest, petId, authorizationUtil.getEmail());
+        Post post = postManager.create(postCreateRequest, petId, authorizationUtil.getId());
         return PostCreateResponse.of(post);
     }
 }

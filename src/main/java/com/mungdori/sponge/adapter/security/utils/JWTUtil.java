@@ -23,10 +23,12 @@ public class JWTUtil {
         refreshTokenExpiresIn = 604800L * 1000; // 7일
     }
 
-    // JWT 클레임 username 파싱
-    public static String getEmail(String token) {
-        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("email", String.class);
+    public static Long getId(String token) {
+        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("id", Long.class);
     }
+
+
+    // JWT 클레임 username 파싱
 
     public static String getNickname(String token) {
         return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("nickname", String.class);
@@ -61,15 +63,14 @@ public class JWTUtil {
     }
 
     // JWT(Access/Refresh) 생성
-    public static String createJWT(String email, String nickname,String loginType, Boolean isAccess) {
+    public static String createJWT(Long id, String nickname,String loginType, Boolean isAccess) {
 
         long now = System.currentTimeMillis();
         long expiry = isAccess ? accessTokenExpiresIn : refreshTokenExpiresIn;
         String type = isAccess ? "access" : "refresh";
 
         return Jwts.builder()
-
-                .claim("email", email)
+                .claim("id", id)
                 .claim("nickname", nickname)
                 .claim("loginType", loginType)
                 .claim("type", type)
@@ -78,4 +79,6 @@ public class JWTUtil {
                 .signWith(secretKey)
                 .compact();
     }
+
+
 }
