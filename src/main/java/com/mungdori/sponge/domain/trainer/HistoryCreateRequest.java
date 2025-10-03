@@ -1,7 +1,6 @@
 package com.mungdori.sponge.domain.trainer;
 
 import jakarta.validation.constraints.NotBlank;
-import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
 public record HistoryCreateRequest(

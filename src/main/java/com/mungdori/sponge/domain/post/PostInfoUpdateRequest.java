@@ -1,7 +1,6 @@
 package com.mungdori.sponge.domain.post;
 
 import jakarta.validation.constraints.NotBlank;
-import org.springframework.lang.NonNull;
 
 import java.util.List;
 
