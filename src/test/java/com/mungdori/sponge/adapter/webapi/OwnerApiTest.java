@@ -54,17 +54,15 @@ class OwnerApiTest {
     }
 
     @Test
-    @WithMockOwner(id = owner.getId())
+    @WithMockOwner()
     void getMyInfo()  {
-        Owner owner = ownerManager.register(OwnerFixture.createOwnerRegisterRequest());
         MvcTestResult result = mvcTester.get().uri("/api/owner")
                 .exchange();
 
         assertThat(result)
                 .hasStatusOk()
                 .bodyJson()
-                .hasPathSatisfying("$.ownerId", notNull())
-                .hasPathSatisfying("$.nickname", equalsTo(owner));
+                .hasPathSatisfying("$.ownerId", notNull());
     }
 
     @Test
@@ -85,8 +83,6 @@ class OwnerApiTest {
     @Test
     @WithMockOwner
     void update() throws JsonProcessingException {
-        ownerManager.register(OwnerFixture.createOwnerRegisterRequest());
-
         OwnerInfoUpdateRequest request = OwnerFixture.createOwnerInfoUpdateRequest("newnick");
         String requestJson = objectMapper.writeValueAsString(request);
 

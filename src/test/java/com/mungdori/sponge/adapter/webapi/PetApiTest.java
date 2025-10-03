@@ -17,6 +17,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.assertj.MockMvcTester;
 import org.springframework.test.web.servlet.assertj.MvcTestResult;
@@ -44,12 +45,12 @@ class PetApiTest {
     @Test
     @WithMockOwner
     void register() throws JsonProcessingException {
-        Owner owner = createOwner();
+        Long ownerId = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         PetRegisterRequest request = PetFixture.createPetRegisterRequest();
         String requestJson = objectMapper.writeValueAsString(request);
 
-        MvcTestResult result = mvcTester.post().uri("/api/pet").param("ownerId", Objects.requireNonNull(owner.getId()).toString())
+        MvcTestResult result = mvcTester.post().uri("/api/pet").param("ownerId", Objects.requireNonNull(ownerId).toString())
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(requestJson).exchange();
 
@@ -63,8 +64,9 @@ class PetApiTest {
     @Test
     @WithMockOwner()
     void update() throws JsonProcessingException {
-        Owner owner = createOwner();
-        Pet pet = petManager.register(PetFixture.createPetRegisterRequest(), owner.getId());
+        Long ownerId = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        Pet pet = petManager.register(PetFixture.createPetRegisterRequest(), ownerId);
 
         PetInfoUpdateRequest request = PetFixture.createPetInfoUpdateRequest();
         String requestJson = objectMapper.writeValueAsString(request);
@@ -96,8 +98,9 @@ class PetApiTest {
     @Test
     @WithMockOwner()
     void updateFail() throws JsonProcessingException {
-        Owner owner = createOwner();
-        Pet pet = petManager.register(PetFixture.createPetRegisterRequest(), owner.getId());
+        Long ownerId = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        Pet pet = petManager.register(PetFixture.createPetRegisterRequest(), ownerId);
 
         PetInfoUpdateRequest request = PetFixture.createPetInfoUpdateRequest();
         String requestJson = objectMapper.writeValueAsString(request);
@@ -109,17 +112,5 @@ class PetApiTest {
                 .apply(print())
                 .hasStatus(HttpStatus.BAD_REQUEST);
     }
-
-    Owner createOwner() {
-        Owner owner = Owner.register(createOwnerRegisterRequest(), createPasswordEncoder());
-
-        entityManager.persist(owner);
-
-        entityManager.flush();
-        entityManager.clear();
-
-        return owner;
-    }
-
 
 }

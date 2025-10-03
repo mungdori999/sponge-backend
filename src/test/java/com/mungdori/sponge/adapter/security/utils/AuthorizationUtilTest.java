@@ -17,7 +17,6 @@ record AuthorizationUtilTest(AuthorizationUtil authorizationUtil) {
     void authorizationId() {
         Long id = authorizationUtil.getId();
 
-
         assertThat(id).isEqualTo(1L);
     }
 }
