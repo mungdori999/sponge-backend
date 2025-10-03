@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.web.servlet.assertj.MockMvcTester;
 import org.springframework.test.web.servlet.assertj.MvcTestResult;
 
@@ -40,8 +41,8 @@ class PostApiTest {
     @Test
     @WithMockOwner
     void create() throws JsonProcessingException {
-        Owner owner = createOwner();
-        Pet pet = createPet(owner.getId());
+        Long ownerId = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Pet pet = createPet(ownerId);
         PostCreateRequest request = PostFixture.createPostCreateRequest();
 
         String requestJson = objectMapper.writeValueAsString(request);
@@ -53,17 +54,6 @@ class PostApiTest {
                 .hasStatusOk()
                 .bodyJson()
                 .hasPathSatisfying("$.postId", notNull());
-    }
-
-    Owner createOwner() {
-        Owner owner = Owner.register(createOwnerRegisterRequest(), createPasswordEncoder());
-
-        entityManager.persist(owner);
-
-        entityManager.flush();
-        entityManager.clear();
-
-        return owner;
     }
 
     Pet createPet(Long ownerId) {

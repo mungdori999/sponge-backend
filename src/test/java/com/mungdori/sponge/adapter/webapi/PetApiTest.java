@@ -3,7 +3,11 @@ package com.mungdori.sponge.adapter.webapi;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mungdori.sponge.adapter.security.config.WithMockOwner;
+import com.mungdori.sponge.application.owner.provided.OwnerManager;
 import com.mungdori.sponge.application.pet.provided.PetManager;
+import com.mungdori.sponge.domain.owner.Owner;
+import com.mungdori.sponge.domain.owner.OwnerFixture;
+import com.mungdori.sponge.domain.owner.OwnerInfoUpdateRequest;
 import com.mungdori.sponge.domain.pet.Pet;
 import com.mungdori.sponge.domain.pet.PetFixture;
 import com.mungdori.sponge.domain.pet.PetInfoUpdateRequest;
@@ -35,7 +39,7 @@ class PetApiTest {
 
     final MockMvcTester mvcTester;
     final ObjectMapper objectMapper;
-    final EntityManager entityManager;
+    final OwnerManager ownerManager;
     final PetManager petManager;
 
     @Test
@@ -94,14 +98,13 @@ class PetApiTest {
     @Test
     @WithMockOwner()
     void updateFail() throws JsonProcessingException {
-        Long ownerId = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        Pet pet = petManager.register(PetFixture.createPetRegisterRequest(), ownerId);
+        Owner otherOwner = ownerManager.register(OwnerFixture.createOwnerRegisterRequest("newemail@naver.com","newnick"));
+        Pet otherPet = petManager.register(PetFixture.createPetRegisterRequest(), otherOwner.getId());
 
         PetInfoUpdateRequest request = PetFixture.createPetInfoUpdateRequest();
         String requestJson = objectMapper.writeValueAsString(request);
 
-        MvcTestResult result = mvcTester.patch().uri("/api/pet/{id}", pet.getId()).contentType(MediaType.APPLICATION_JSON_VALUE)
+        MvcTestResult result = mvcTester.patch().uri("/api/pet/{id}", otherPet.getId()).contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(requestJson).exchange();
 
         assertThat(result)

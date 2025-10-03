@@ -55,7 +55,7 @@ class OwnerApiTest {
     }
 
     @Test
-    @WithMockOwner()
+    @WithMockOwner
     void getMyInfo()  {
         MvcTestResult result = mvcTester.get().uri("/api/owner")
                 .exchange();
