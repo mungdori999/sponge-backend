@@ -35,8 +35,8 @@ public class PetApi {
     }
 
     @PostMapping()
-    public PetRegisterResponse register(@RequestBody @Valid PetRegisterRequest petRegisterRequest, @RequestParam Long ownerId) {
-        Pet pet = petManager.register(petRegisterRequest, ownerId);
+    public PetRegisterResponse register(@RequestBody @Valid PetRegisterRequest petRegisterRequest) {
+        Pet pet = petManager.register(petRegisterRequest, authorizationUtil.getId());
         return PetRegisterResponse.of(pet);
     }
 
