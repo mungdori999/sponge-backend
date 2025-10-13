@@ -82,6 +82,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.GET,"/api/owner/**").permitAll()
                         .requestMatchers(HttpMethod.POST,"/api/owner/**").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/api/reissue/**").permitAll()
                         .anyRequest().authenticated());
 
         http
