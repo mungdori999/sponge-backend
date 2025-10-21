@@ -3,7 +3,6 @@ package com.mungdori.sponge.adapter.webapi;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mungdori.sponge.adapter.security.config.WithMockOwner;
-import com.mungdori.sponge.application.post.provided.PostManager;
 import com.mungdori.sponge.domain.pet.Pet;
 import com.mungdori.sponge.domain.pet.PetFixture;
 import com.mungdori.sponge.domain.post.PostCreateRequest;
