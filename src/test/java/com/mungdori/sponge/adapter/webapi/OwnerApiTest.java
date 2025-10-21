@@ -35,11 +35,6 @@ class OwnerApiTest {
     final ObjectMapper objectMapper;
     final OwnerManager ownerManager;
 
-    @BeforeEach
-    void setUp() {
-
-    }
-
     @Test
     void getOwner()  {
         Owner owner = ownerManager.register(OwnerFixture.createOwnerRegisterRequest());

@@ -26,8 +26,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
         String token = extractToken(request);
 
-        if (token == null) {
-            // 토큰이 없으면 그냥 다음 필터로 넘김 (permitAll 경로 등 처리용)
+        if (token == null || request.getRequestURI().startsWith("/reissue")) {
             filterChain.doFilter(request, response);
             return;
         }

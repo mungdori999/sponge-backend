@@ -23,7 +23,6 @@ public class WithMockOwnerSecurityContextFactory implements WithSecurityContextF
 
     @Override
     public SecurityContext createSecurityContext(WithMockOwner annotation) {
-        // 1. 테스트용 Owner 등록
         Owner owner = ownerManager.register(OwnerFixture.createOwnerRegisterRequest());
 
         final SecurityContext securityContext = SecurityContextHolder.createEmptyContext();

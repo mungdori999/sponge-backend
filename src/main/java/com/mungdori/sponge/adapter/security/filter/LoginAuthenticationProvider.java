@@ -4,6 +4,7 @@ import com.mungdori.sponge.adapter.security.LoginTypeAuthenticationToken;
 import com.mungdori.sponge.adapter.security.SecurePasswordEncoder;
 import com.mungdori.sponge.application.owner.required.OwnerRepository;
 import com.mungdori.sponge.application.trainer.required.TrainerRepository;
+import com.mungdori.sponge.domain.owner.Owner;
 import com.mungdori.sponge.domain.shared.Email;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -14,6 +15,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 import static com.mungdori.sponge.adapter.security.utils.LoginType.OWNER;
 import static com.mungdori.sponge.adapter.security.utils.LoginType.TRAINER;

@@ -17,7 +17,7 @@ public class ReissueApi {
     private final JWTManager jwtManager;
 
     @PostMapping
-    private ReissueResponse delete(@RequestBody String refreshToken) {
+    private ReissueResponse reissue(@RequestBody String refreshToken) {
 
         Long id = JWTUtil.getId(refreshToken);
         String nickname = JWTUtil.getNickname(refreshToken);
