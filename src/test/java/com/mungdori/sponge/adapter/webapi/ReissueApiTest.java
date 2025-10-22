@@ -1,8 +1,11 @@
 package com.mungdori.sponge.adapter.webapi;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mungdori.sponge.adapter.security.utils.JWTUtil;
 import com.mungdori.sponge.adapter.security.utils.LoginType;
 import com.mungdori.sponge.application.token.provided.JWTManager;
+import com.mungdori.sponge.domain.token.RefreshTokenRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
@@ -22,17 +25,21 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ReissueApiTest {
 
     final MockMvcTester mvcTester;
+    final ObjectMapper objectMapper;
     final JWTManager jwtManager;
 
 
     @Test
-    void reissueOwner() {
+    void reissueOwner() throws JsonProcessingException {
 
         String refreshToken = JWTUtil.createJWT(1L, "nickname", LoginType.OWNER.name(), false);
         jwtManager.save(refreshToken);
 
+        var request = new RefreshTokenRequest(refreshToken);
+        String requestJson = objectMapper.writeValueAsString(request);
+
         MvcTestResult result = mvcTester.post().uri("/api/reissue")
-                .contentType(MediaType.APPLICATION_JSON_VALUE).content(refreshToken).exchange();
+                .contentType(MediaType.APPLICATION_JSON_VALUE).content(requestJson).exchange();
 
         assertThat(result)
                 .hasStatusOk()
