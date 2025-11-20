@@ -10,4 +10,6 @@ public interface PostManager {
     Post create(@Valid PostCreateRequest postCreateRequest, Long petId, Long ownerId);
 
     Post update(Long postId, @Valid PostInfoUpdateRequest postInfoUpdateRequest, Long ownerId);
+
+    void delete(Long postId);
 }

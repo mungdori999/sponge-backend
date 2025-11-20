@@ -51,6 +51,11 @@ public class PostModifyService implements PostManager {
         return post;
     }
 
+    @Override
+    public void delete(Long postId) {
+
+    }
+
     private void checkValidMyAccount(Long petId, Long ownerId) {
         Pet pet = petRepository.findById(petId).orElseThrow(() -> new IllegalArgumentException("Pet not found"));
         Owner owner = ownerRepository.findById(ownerId).orElseThrow(() -> new IllegalArgumentException("Owner not found"));
